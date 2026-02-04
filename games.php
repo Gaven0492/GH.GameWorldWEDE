@@ -1,6 +1,6 @@
 <?php
 /*============================================================================*/
-/*=================== created 02-02-2026 | SDN: 96957 Gmik ===================*/
+/*=================== created 06-02-2026 | SDN: 96957 Gmik ===================*/
 /*============================================================================*/
 
 include("Inc/functions.php");
@@ -8,12 +8,14 @@ HTMLhead();
 HTMLnavBar();
 HTMLcategories();
 
+$categoryId = intval($_GET['categoryId'] ?? 0);
 ?>
+    <main>
 
-    <main class="heroSection">
-        <h2 class="heroTitle">Welcome to GameWorld</h2>
-        <p class="heroSubtitle">Find the best games for PC, PlayStation 5, and Xbox Series X|S</p>
     </main>
+    <section class="cardSection">
+        <?php DisplayGames($categoryId); ?>
+    </section>
 
 <?php
 HTMLfoot();

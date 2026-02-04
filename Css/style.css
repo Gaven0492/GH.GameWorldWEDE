@@ -1,38 +1,6 @@
-/* Core Cyberpunk 2077 Palette
-Midnight Black — #0A0A0F
-Main background, UI base
-
-Gunmetal Gray — #1E1E2A
-Panels, cards, secondary backgrounds
-
-Concrete Gray — #2E2E3A
-Borders, muted text, separators
-
-Primary Accent (signature CP2077 color)
-Neon Yellow — #FCEE0A
-Buttons, highlights, key UI elements
-
-Secondary Accents (choose one or two)
-
-Electric Cyan — #00F0FF
-Tech lines, links, holographic elements
-
-Hot Magenta — #FF2A8A
-Alerts, emphasis, cyberpunk flair
-
-Neon Purple — #9D4DFF
-Glows, atmospheric lighting
-
-Utility / Status Colors
-
-Warning Red — #FF3B3B
-Errors, danger, hostile states
-
-Acid Green — #3CFF3C
-Success, hacking, active systems
-*/
-/*=================== created 02-02-2026 | SDN: 96957 Gmik ===================*/
 /*============================================================================*/
+/*=================== created 02-02-2026 | SDN: 96957 Gmik ==================*/
+/*==========================================================================*/
 
 * {
     margin: 0;
@@ -41,36 +9,294 @@ Success, hacking, active systems
 }
 
 :root{
-    font-size: 16px;
+    /*== Background Colors ==*/
+    --colorBackground: #1a1625;
+    --colorCardBackground: #2d2640;
+    
+    /*== Text Colors ==*/
+    --colorText: #ffffff;
+    --colorTextDark: #000000;
+    
+    /*== Primary Colors ==*/
+    --colorPrimary: #4a4363;
+    --colorHover: #5e5478;       
+    
+    /*== Accent Colors ==*/
+    --colorBorder: #3a3150;
+    --colorAccent: #7c6fb1;
+    
+    /*== Shadow ==*/
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
-body{
-    font-family: "Cyber", "Blender Pro";
-    background: #FCEE0A;
-    color: #0a0a0a;
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--colorBackground);
+    color: var(--colorText);
+    line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
-.header{
+/*=========================================================================*/
+/*============================ Header Styling ============================*/
+/*=======================================================================*/
+.header {
     position: sticky;
     top: 0;
     width: 100%;
-    height: 20vh;
-    padding: 1em 5%;
-    z-index: 3;
+    background: var(--colorPrimary);
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow);
+    padding: 0.8rem 5%;
+    z-index: 1000;
+    transition: all 0.3s ease;
 }
 
-.headerContainer{
+.headerContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.logo img,
+/*============================ Logo Styling ============================*/
+.logo {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+}
+
 .logo a {
-    height: 100px;
-    width: 120px;
-    font-size: 2em;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     text-decoration: none;
-    color: #0a0a0a;
+    color: var(--colorText);
+    transition: opacity 0.3s ease;
+}
+
+.logo a:hover {
+    opacity: 0.6;
+}
+
+.LogoImage {
+    height: 40px;
+    width: 45px;
+    color: white;
+}
+
+.LogoText {
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+}
+
+.LogoSubText {
+    font-size: 1rem;
+    font-weight: 200;
+    font-style: italic;
+}
+
+/*=============================================================================*/
+/*============================ socialmenu Styling ============================*/
+/*===========================================================================*/
+.socialMenu ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    list-style: none;
+    text-decoration: none;
+}
+
+.socialMenu ul li a {
+    position: relative;
+    color: var(--colorText);
+    background-color: var(--colorPrimary);
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+}
+
+.socialMenu ul li a::after {
+    content: "";
+    position: absolute;
+    bottom: 5px;        
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #fff;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.socialMenu ul li a:hover {
+    background-color: var(--colorHover);
+    color: #ffffff;
+}
+
+.socialMenu ul li a:hover::after {
+    width: 50%;
+}
+
+.socialMenu ul li a.active {
+    background-color: var(--colorHover);
+}
+
+.socialMenu ul li a.active::after {
+    width: 50%;
+}
+
+
+/*===========================================================================*/
+/*============================ category Styling ============================*/
+/*=========================================================================*/
+
+nav{
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navMenu {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: var(--colorPrimary);
+}
+
+.navMenu li {
+    flex: 1;               
+    text-align: center;    
+}
+
+.navMenu li a {
+    position: relative;
+    display: block;        
+    color: var(--colorText);
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 0.5rem;          
+}
+
+.navMenu li a::after {
+    content: "";
+    position: absolute;
+    bottom: 5px;        
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #fff;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.navMenu li a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+.navMenu li a:hover::after {
+    width: 50%;
+}
+
+.navMenu li a.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.navMenu li a.active::after {
+    width: 50%;
+}
+
+/*=======================================================================*/
+/*============================ main Styling ============================*/
+/*=====================================================================*/
+.heroSection {
+    text-align: center;
+    padding: 70px 20px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.heroTitle {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+
+
+/*=======================================================================*/
+/*============================ game Styling ============================*/
+/*=====================================================================*/
+
+.cardSection{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin: 2rem;
+    gap: 2rem;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid var(--colorPrimary);
+}
+
+.cardImage {
+    background-color: var(--colorPrimary);
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardImage img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.cardContent {
+    background-color: var(--colorCardBackground);
+    padding: .5rem;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 70px auto auto;
+}
+
+.cardContent h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.cardButton {
+    margin: 1rem 3rem;
+    padding: .5rem;
+    background-color: var(--colorPrimary);
+    color: var(--colorText);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.cardButton:hover {
+    background-color: var(--colorHover);
+    transition: background-color 0.3s ease;
 }

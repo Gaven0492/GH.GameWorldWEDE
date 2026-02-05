@@ -19,7 +19,12 @@
     
     /*== Primary Colors ==*/
     --colorPrimary: #4a4363;
-    --colorHover: #5e5478;       
+    --colorHover: #5e5478;   
+    
+    /*== platform Colors ==*/
+    --colorPC: #c05555;
+    --colorPlayStation: #3a84ce;
+    --colorXbox: #8ce072;
     
     /*== Accent Colors ==*/
     --colorBorder: #3a3150;
@@ -34,8 +39,6 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     background: var(--colorBackground);
     color: var(--colorText);
-    line-height: 1.6;
-    overflow-x: hidden;
     min-height: 100vh;
 }
 
@@ -72,7 +75,7 @@ body {
 .logo a {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.3rem;
     text-decoration: none;
     color: var(--colorText);
     transition: opacity 0.3s ease;
@@ -85,13 +88,13 @@ body {
 .LogoImage {
     height: 40px;
     width: 45px;
-    color: white;
+    background-color: var(--colorPrimary);
 }
 
 .LogoText {
     font-size: 2.5rem;
     font-weight: bold;
-    letter-spacing: -0.5px;
+    letter-spacing: 2px;
 }
 
 .LogoSubText {
@@ -285,10 +288,9 @@ nav{
 }
 
 
-.cardButton {
+button{
     margin: 1rem 3rem;
     padding: .5rem;
-    background-color: var(--colorPrimary);
     color: var(--colorText);
     border: none;
     border-radius: 8px;
@@ -296,7 +298,37 @@ nav{
     font-size: 1rem;
 }
 
-.cardButton:hover {
-    background-color: var(--colorHover);
-    transition: background-color 0.3s ease;
+
+.cardButton {
+    background-color: var(--colorPrimary);
+    position: relative;
+}
+
+.cardButton::before {
+    content: " ";
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    transition: clip-path 0.8s ease;
+    background-color: var(--hoverColor);
+    clip-path: circle(0% at top);
+}
+
+.cardButton:hover::before {
+    clip-path: circle(150% at top);
+}
+
+.cardButton span {
+    position: relative; /* Text stays above transition */
+}
+
+/*=======================================================================*/
+/*============================ footer Styling ============================*/
+/*=====================================================================*/
+footer {
+    background-color: var(--colorPrimary);
+    color: var(--colorText);
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 26vh;
 }

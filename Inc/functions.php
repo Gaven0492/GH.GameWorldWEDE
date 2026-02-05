@@ -17,7 +17,7 @@ function HTMLhead(){
         <meta name="description" content="A store where you can buy games for different platforms">
         <meta charset="UTF-8">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="icon" type="image/png" href="Img/.png">
+        <link rel="icon" type="image/png" href="Img/GameWorldLogo.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>GameWorld</title>
         <link rel="stylesheet" href="Css/style.css">
@@ -38,8 +38,8 @@ function HTMLnavBar()
         <div class="headerContainer">
             <div class="logo">
                 <a href="index.php">
-                    <img src="Img/.png" alt="GameWorld Logo" class="LogoImage">
-                    <h1 class="LogoText">GameWorld</h1>
+                    <img src="Img/GameWorldLogo.png" alt="GameWorld Logo" class="LogoImage">
+                    <h1 class="LogoText">ameWorld</h1>
                 </a>
                 <h2 class="LogoSubText">Your Game Store</h2>
             </div>
@@ -146,12 +146,12 @@ function GetCategoryColor($categoryId)
         1 => "#e61e1e",  // PC 
         2 => "#0066cc",  // PlayStation 
         3 => "#3ab814",  // Xbox 
-        4 => "#c05555",  // PC 
+        4 => "#be3f3f",  // PC 
         5 => "#3a84ce",  // PlayStation 
         6 => "#8ce072",  // Xbox 
     ];
     
-    // if category exists, return its color, otherwise return default purple
+    // if category exists, return color,  default purple
     if (isset($colors[$categoryId])) {
         return $colors[$categoryId];
     } else {
@@ -200,7 +200,7 @@ function DisplayGames($categoryId)
             <div class="cardContent" >
                 <h3 class="cardTitle"><?php echo htmlspecialchars($game['gameName']); ?></h3>
                 <p class="cardPrice">$<?php echo number_format($game['gamePrice'], 2); ?></p>
-                <button class="cardButton">Buy Now</button>
+                <button class="cardButton" style="--hoverColor: <?php echo $colors; ?>;"><span>Buy Now</span></button>
             </div>
         </article>
         <?php

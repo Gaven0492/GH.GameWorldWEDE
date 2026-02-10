@@ -66,10 +66,10 @@ function HTMLcategories()
     <nav>
         <ul class="navMenu" id="navMenu">
             <?php foreach ($categories as $category): ?>
-                <?php $color = GetCategoryColor($category['categoryId']); ?>
+                <?php $color = GetCategoryColor($category["categoryId"]); ?>
                 <li style="background-color: <?php echo $color; ?>;">
-                    <a href="games.php?categoryId=<?php echo $category['categoryId']; ?>">
-                        <?php echo htmlspecialchars($category['categoryName']); ?>
+                    <a href="games.php?categoryId=<?php echo $category["categoryId"]; ?>">
+                        <img src="Img/<?php echo htmlspecialchars($category["categoryImg"]); ?>"> <?php echo htmlspecialchars($category["categoryName"]); ?>
                     </a>
                 </li>
             <?php endforeach; ?>
@@ -136,6 +136,26 @@ function GetCategories()
 
 
 /**
+ * function to fetch category from category table defined by categoryId
+ * @param int $categoryId
+ * @return array $category
+ */
+function GetCategoryById($categoryId)
+{
+    $db = DbConnect();
+    // define sql statement
+    $sql = "SELECT * FROM category WHERE categoryId = " . intval($categoryId);
+    $resource = $db->query($sql) or die($db->error);
+    // fetch data as associated array
+    $category = $resource->fetch_assoc();
+    // close connection
+    $db->close();
+    // return category
+    return $category;
+}
+
+
+/**
  * - Function to get color based on category ID
  * @param int $categoryId
  * @return string $color
@@ -188,23 +208,39 @@ function GetGameByCategory($categoryId)
  */
 function DisplayGames($categoryId)
 {
-    $games = GetGameByCategory($categoryId);
-    $colors = GetCategoryColor($categoryId + 3);
+    $category = GetCategoryById($categoryId); 
+    $games    = GetGameByCategory($categoryId);
+    $colors    = GetCategoryColor($categoryId + 3);
 
     foreach ($games as $game) {
         ?>
         <article class="card">
             <div class="cardImage" style="background-color: <?php echo $colors; ?>;">
-                <img src="Img/<?php echo htmlspecialchars($game['gameImg']); ?>" alt="<?php echo htmlspecialchars($game['gameName']); ?>">
+                <div class="categoryLogo">
+                    <img src="Img/<?php echo htmlspecialchars($category["categoryImg"]); ?>" alt="<?php echo htmlspecialchars($category["categoryName"]); ?>">
+                </div>
+                <button class="wishlistButton" onclick="toggleWishlist(this)">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+                <img src="Img/<?php echo htmlspecialchars($game["gameImg"]); ?>" alt="<?php echo htmlspecialchars($game["gameName"]); ?>">
+                <div class="cardPrice">$<?php echo number_format($game["gamePrice"], 2); ?></div>
             </div>
-            <div class="cardContent" >
-                <h3 class="cardTitle"><?php echo htmlspecialchars($game['gameName']); ?></h3>
-                <p class="cardPrice">$<?php echo number_format($game['gamePrice'], 2); ?></p>
-                <button class="cardButton" style="--hoverColor: <?php echo $colors; ?>;"><span>Buy Now</span></button>
+            
+            <div class="cardContent">
+                <h3 class="cardTitle"><?php echo htmlspecialchars($game["gameName"]); ?></h3>
+                <div class="cardButtons">
+                    <button class="cardButton addToCartButton">
+                        <span>+ <i class="fa-solid fa-cart-shopping"></i></span>
+                    </button>
+                    <button class="cardButton buyNowButton" style="--hoverColor: <?php echo $colors; ?>;">
+                        <span>Buy Now</span>
+                    </button>
+                </div>
             </div>
         </article>
         <?php
     }
 }
+
 ?>
 

@@ -8,7 +8,7 @@ HTMLhead();
 HTMLnavBar();
 HTMLcategories();
 
-$categoryId = intval($_GET['categoryId'] ?? 0);
+$categoryId = $_GET['categoryId'] ?? null;
 ?>
     <main>
 

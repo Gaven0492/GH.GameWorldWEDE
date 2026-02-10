@@ -21,14 +21,9 @@
     --colorPrimary: #4a4363;
     --colorHover: #5e5478;   
     
-    /*== platform Colors ==*/
-    --colorPC: #c05555;
-    --colorPlayStation: #3a84ce;
-    --colorXbox: #8ce072;
-    
     /*== Accent Colors ==*/
     --colorBorder: #3a3150;
-    --colorAccent: #7c6fb1;
+    --colorAccent: #ff98b4;
     
     /*== Shadow ==*/
     --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -53,8 +48,8 @@ body {
     backdrop-filter: blur(20px);
     box-shadow: var(--shadow);
     padding: 0.8rem 5%;
-    z-index: 1000;
     transition: all 0.3s ease;
+    z-index: 1000;
 }
 
 .headerContainer {
@@ -126,33 +121,28 @@ body {
     padding: 0.5rem 1rem;
 }
 
-.socialMenu ul li a::after {
+.socialMenu ul li a::after,
+.socialMenu ul li a::before {
     content: "";
     position: absolute;
-    bottom: 5px;        
-    left: 50%;
-    width: 0;
+    width: 100%;
     height: 2px;
-    background-color: #fff;
-    transform: translateX(-50%);
-    transition: width 0.3s ease;
+    background: var(--colorText);
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s ease-out;
 }
 
-.socialMenu ul li a:hover {
-    background-color: var(--colorHover);
-    color: #ffffff;
+.socialMenu ul li a::before {
+    top: -5px;
+    transform-origin: left;
 }
 
-.socialMenu ul li a:hover::after {
-    width: 50%;
-}
-
-.socialMenu ul li a.active {
-    background-color: var(--colorHover);
-}
-
-.socialMenu ul li a.active::after {
-    width: 50%;
+.socialMenu ul li a:hover::after,
+.socialMenu ul li a:hover::before {
+    transform: scaleX(1);
 }
 
 
@@ -190,6 +180,13 @@ nav{
     text-decoration: none;
     font-size: 1.1rem;
     padding: 0.5rem;          
+}
+
+.navMenu li a img {
+    height: 25px;
+    width: 25px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
 }
 
 .navMenu li a::after {
@@ -247,79 +244,161 @@ nav{
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     margin: 2rem;
     gap: 2rem;
+    justify-content: center;
 }
 
 .card{
     display: flex;
     flex-direction: column;
-    background-color: transparent;
+    background-color: var(--colorCardBackground);
     box-shadow: var(--shadow);
     overflow: hidden;
-    border-radius: 12px;
     border: 2px solid var(--colorPrimary);
+    position: relative;
+    border-radius: 12px;
 }
 
+/*=======================================================================*/
+/*========================= Card image section =========================*/
 .cardImage {
-    background-color: var(--colorPrimary);
-    height: 300px;
+    height: 280px;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .cardImage img {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
+    max-width: 90%;
+    max-height: 90%;
 }
 
+.categoryLogo {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 10;
+}
+
+.categoryLogo img {
+    width: 40px;  
+    height: auto;
+}
+
+.wishlistButton {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--colorText);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.3rem;
+    transition: transform 0.2s ease;
+    width: auto;
+    margin: 0;
+    z-index: 10;
+}
+
+.wishlistButton:hover {
+    transform: scale(1.15);
+}
+
+.wishlistButton.active i {
+    color: var(--colorAccent);
+}
+
+.wishlistButton.active i::before {
+    content: "\f004";
+    font-weight: 900;
+}
+
+.cardPrice {
+    position: absolute;
+    bottom: 10px;
+    right: -5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--colorText);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 2px var(--colorText);
+    border-style: dashed dashed solid;
+    font-weight: bold;
+}
+
+
+/*=======================================================================*/
+/*======================== Card content section ========================*/
 .cardContent {
     background-color: var(--colorCardBackground);
-    padding: .5rem;
-    text-align: center;
-    display: grid;
-    grid-template-rows: 70px auto auto;
+    padding: 1rem;
+    text-align: left;
 }
 
-.cardContent h3 {
+.cardTitle {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    min-height: 50px;
+    text-align: center;
+}
+
+.cardButtons {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
 }
 
-
 button{
-    margin: 1rem 3rem;
-    padding: .5rem;
+    width: 40%;
+    padding: 0.7rem;
     color: var(--colorText);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
+    font-weight: 500;
 }
-
 
 .cardButton {
     background-color: var(--colorPrimary);
     position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .cardButton::before {
-    content: " ";
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: 8px;
-    transition: clip-path 0.8s ease;
     background-color: var(--hoverColor);
-    clip-path: circle(0% at top);
+    transition: clip-path 0.3s ease;
+    clip-path: circle(0% at center);
 }
 
 .cardButton:hover::before {
-    clip-path: circle(150% at top);
+    clip-path: circle(150% at center);
 }
 
 .cardButton span {
-    position: relative; /* Text stays above transition */
+    position: relative;
+    z-index: 1;
+}
+
+.addToCartButton {
+    background-color: var(--colorPrimary);
+}
+
+.addToCartButton:hover {
+    background-color: var(--colorHover);
+}
+
+.buyNowButton {
+    background-color: var(--colorPrimary);
 }
 
 /*=======================================================================*/
@@ -332,3 +411,4 @@ footer {
     padding: 1rem 0;
     margin-top: 26vh;
 }
+

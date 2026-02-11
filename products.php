@@ -10,9 +10,7 @@ HTMLcategories();
 
 $categoryId = $_GET['categoryId'] ?? null;
 ?>
-    <main>
 
-    </main>
     <section class="cardSection">
         <?php DisplayGames($categoryId); ?>
     </section>

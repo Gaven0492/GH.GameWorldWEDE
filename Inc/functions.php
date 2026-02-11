@@ -36,8 +36,8 @@ function HTMLnavBar()
 <body>
     <header class="header">
         <div class="headerContainer">
-            <div class="logo">
-                <a href="index.php">
+            <div class="logo glitchCard">
+                <a href="index.php" class="glitchEffect">
                     <img src="Img/GameWorldLogo.png" alt="GameWorld Logo" class="LogoImage">
                     <h1 class="LogoText">ameWorld</h1>
                 </a>
@@ -46,7 +46,7 @@ function HTMLnavBar()
             <nav class="socialMenu">
                 <ul>
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="#"><i class="fa-solid fa-user"></i> Contact</a></li>
+                    <li><a href="contact.php"><i class="fa-solid fa-user"></i> Contact</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
                 </ul>
@@ -55,6 +55,7 @@ function HTMLnavBar()
     </header>
 <?php
 }
+
 
 /**
  * - Function to print the html navigation bar
@@ -68,7 +69,7 @@ function HTMLcategories()
             <?php foreach ($categories as $category): ?>
                 <?php $color = GetCategoryColor($category["categoryId"]); ?>
                 <li style="background-color: <?php echo $color; ?>;">
-                    <a href="games.php?categoryId=<?php echo $category["categoryId"]; ?>">
+                    <a href="products.php?categoryId=<?php echo $category["categoryId"]; ?>">
                         <img src="Img/<?php echo htmlspecialchars($category["categoryImg"]); ?>"> <?php echo htmlspecialchars($category["categoryName"]); ?>
                     </a>
                 </li>
@@ -229,10 +230,10 @@ function DisplayGames($categoryId)
             <div class="cardContent">
                 <h3 class="cardTitle"><?php echo htmlspecialchars($game["gameName"]); ?></h3>
                 <div class="cardButtons">
-                    <button class="cardButton addToCartButton">
-                        <span>+ <i class="fa-solid fa-cart-shopping"></i></span>
+                    <button class="cardButton addToCartButton submitButton">
+                        <span><i class="fa fa-plus"><span>-</span></i><i class="fa-solid fa-cart-shopping"></i></span>
                     </button>
-                    <button class="cardButton buyNowButton" style="--hoverColor: <?php echo $colors; ?>;">
+                    <button class="cardButton buyNowButton resetButton">
                         <span>Buy Now</span>
                     </button>
                 </div>

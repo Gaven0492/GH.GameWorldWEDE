@@ -22,6 +22,7 @@ function HTMLhead(){
         <title>GameWorld</title>
         <link rel="stylesheet" href="Css/style.css">
         <script src="Js/script.js" defer></script>
+        
     </head>
 <?php
 }
@@ -48,7 +49,7 @@ function HTMLnavBar()
                     <li><a href="index.php">Home</a></li>
                     <li><a href="contact.php"><i class="fa-solid fa-user"></i> Contact</a></li>
                     <li><a href="#">About</a></li>
-                    <li><a href="#"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
                 </ul>
             </nav>
         </div>
@@ -202,6 +203,22 @@ function GetGameByCategory($categoryId)
     return $games;
 }
 
+
+/**
+ * function to fetch games from game table defined by gameId
+ * @param int $gameId
+ * @return array $gameId
+ */
+function GetGameById($gameId)
+{
+    $db = DbConnect();
+    $sql = "SELECT * FROM game WHERE gameId = " . intval($gameId);
+    $result = $db->query($sql);
+    $game = $result->fetch_assoc();
+    $db->close();
+    return $game;
+}
+
 /**
  * - Function to display games based on category
  * @param int $categoryId
@@ -224,15 +241,21 @@ function DisplayGames($categoryId)
                     <i class="fa-regular fa-heart"></i>
                 </button>
                 <img src="Img/<?php echo htmlspecialchars($game["gameImg"]); ?>" alt="<?php echo htmlspecialchars($game["gameName"]); ?>">
-                <div class="cardPrice">$<?php echo number_format($game["gamePrice"], 2); ?></div>
+                <div class="cardPrice">€ <?php echo number_format($game["gamePrice"], 2); ?></div>
             </div>
             
             <div class="cardContent">
                 <h3 class="cardTitle"><?php echo htmlspecialchars($game["gameName"]); ?></h3>
                 <div class="cardButtons">
-                    <button class="cardButton addToCartButton submitButton">
-                        <span><i class="fa fa-plus"><span>-</span></i><i class="fa-solid fa-cart-shopping"></i></span>
-                    </button>
+                    <form method="post" action="cart.php">
+                        <input type="hidden" name="add" value="<?php echo $game['gameId']; ?>">
+                        <button type="submit" class="cardButton addToCartButton submitButton">
+                            <span>
+                                <i class="fa fa-plus"></i>
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </span>
+                        </button>
+                    </form>
                     <button class="cardButton buyNowButton resetButton">
                         <span>Buy Now</span>
                     </button>
@@ -243,5 +266,77 @@ function DisplayGames($categoryId)
     }
 }
 
-?>
+/**
+ * function to add items to cart
+ * 
+ */
+function addToCart($gameId)
+{
+    $db = DbConnect();
+    $statement = $db->prepare("SELECT gameId, gameName, gamePrice FROM game WHERE gameId = ?");
+    $statement->bind_param("i", $gameId);
+    $statement->execute();
+    $result = $statement->get_result();
+    $game = $result->fetch_assoc();
+    $statement->close();
+    $db->close();
 
+    if ($game) {
+        if (!isset($_SESSION["cart"])) {
+            $_SESSION["cart"] = [];
+        }
+        if (isset($_SESSION["cart"][$gameId])) {
+            $_SESSION["cart"][$gameId]["quantity"]++;
+        } else {
+            $_SESSION["cart"][$gameId] = [
+                "name" => $game["gameName"],
+                "price" => $game["gamePrice"],
+                "quantity" => 1
+            ];
+        }
+        return true;
+    }
+    return false;
+}
+
+
+
+/**
+ * - function to remeove products from cart
+ * 
+ */
+function removeFromCart($gameId)
+{
+    if (isset($_SESSION["cart"][$gameId])) {
+        unset($_SESSION["cart"][$gameId]);
+        return true;
+    }
+    return false;
+}
+
+/**
+ * - function to update quantity fof cart
+ */
+function updateCartQuantity($gameId, $quantity)
+{
+        if (isset($_SESSION["cart"][$gameId])) {
+        $_SESSION["cart"][$gameId]["quantity"] = max(1, (int)$quantity);
+        return true;
+    }
+    return false;
+}
+
+/**
+ * - function to calc total products in cart
+ */
+function getCartTotal()
+{
+    $total = 0;
+    if (isset($_SESSION["cart"])){
+        foreach ($_SESSION["cart"] as $item) {
+            $total += $item["price"] * $item["quantity"];
+        }
+    }
+    return $total;
+}
+?>

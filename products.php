@@ -8,7 +8,19 @@ HTMLhead();
 HTMLnavBar();
 HTMLcategories();
 
-$categoryId = $_GET['categoryId'] ?? null;
+$categoryId = $_GET['categoryId'];
+
+if (isset($_GET["id"])){
+    $gameId = $_GET["id"];
+
+    if (addToCart($gameId)){
+        $_SESSION["succesMessage"] = "Product added to cart succesfully";
+    }else{
+        $_SESSION["errorMessage"] = "Product not found";
+    }
+}else{
+    $_SESSION["errorMessage"] = "Invalid product ID";
+}
 ?>
 
     <section class="cardSection">

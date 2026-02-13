@@ -6,6 +6,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border: 1px solid green;
 }
 
 :root{
@@ -24,6 +25,7 @@
     /*== Accent Colors ==*/
     --colorBorder: #3a3150;
     --colorAccent: #ff98b4;
+    --colorSecondary: #d39bf8;
     
     /*== Shadow ==*/
     --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -379,7 +381,8 @@ button{
 
 /*============================================================================*/
 /*=============================  Sweep to right =============================*/
-.addToCartButton, .submitButton {
+.addToCartButton, 
+.submitButton {
     display: inline-block;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
@@ -392,7 +395,8 @@ button{
     transition-duration: 0.3s;
 }
 
-.addToCartButton:before, .submitButton:before {
+.addToCartButton:before, 
+.submitButton:before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -414,11 +418,21 @@ button{
     transition-timing-function: ease-out;
 }
 
-.addToCartButton:hover, .addToCartButton:focus, .addToCartButton:active, .submitButton:hover, .submitButton:focus, .submitButton:active {
+.addToCartButton:hover, 
+.addToCartButton:focus, 
+.addToCartButton:active, 
+.submitButton:hover, 
+.submitButton:focus, 
+.submitButton:active {
     color: var(--colorText);
 }
 
-.addToCartButton:hover:before, .addToCartButton:focus:before, .addToCartButton:active:before, .submitButton:hover:before, .submitButton:focus:before, .submitButton:active:before {
+.addToCartButton:hover:before, 
+.addToCartButton:focus:before, 
+.addToCartButton:active:before, 
+.submitButton:hover:before, 
+.submitButton:focus:before, 
+.submitButton:active:before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
 }
@@ -426,7 +440,8 @@ button{
 
 /*============================================================================*/
 /*=============================  Sweep to left ==============================*/
-.buyNowButton, .resetButton{
+.buyNowButton,
+.resetButton{
     display: inline-block;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
@@ -439,7 +454,8 @@ button{
     transition-duration: 0.3s;
 }
 
-.buyNowButton:before, .resetButton:before{
+.buyNowButton:before,
+.resetButton:before{
     content: "";
     position: absolute;
     z-index: -1;
@@ -461,11 +477,21 @@ button{
     transition-timing-function: ease-out;
 }
 
-.buyNowButton:hover, .buyNowButton:focus, .buyNowButton:active, .resetButton:hover, .resetButton:focus, .resetButton:active {
+.buyNowButton:hover,
+.buyNowButton:focus,
+.buyNowButton:active,
+.resetButton:hover,
+.resetButton:focus,
+.resetButton:active {
     color: var(--colorText);
 }
 
-.buyNowButton:hover:before, .buyNowButton:focus:before, .buyNowButton:active:before, .resetButton:hover:before, .resetButton:focus:before, .resetButton:active:before {
+.buyNowButton:hover:before,
+.buyNowButton:focus:before,
+.buyNowButton:active:before,
+.resetButton:hover:before,
+.resetButton:focus:before,
+.resetButton:active:before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
 }
@@ -560,9 +586,6 @@ form h1{
     z-index: 2;
 }
 
-.formButtons{
-    margin-top: 1.5rem;
-}
 
 /*============================================================================*/
 /*============ Different background colors for each social media ============*/
@@ -596,20 +619,21 @@ input{
 
 .formButtons{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
 }
 
 #submit, #reset{
     display: flex;
     justify-content: center;
-    width: 45%;
+    width: 40%;
     gap: 1em;
     padding: 1em 3em;
     background: var(--colorPrimary);
     color: var(--colorText);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.1em;
+    font-size: 1rem;
     letter-spacing: 2px;
     border: 2px solid var(--colorBorder);
     transition: all .5s;
@@ -617,6 +641,162 @@ input{
     box-shadow: 2px 4px 10px var(--colorTextDark);
 }
 
+
+/*============================================================================*/
+/*=============================== Cart Styling ==============================*/
+/*==========================================================================*/
+
+.cartSection {
+    display: flex;
+    justify-content: center;
+    margin: 3rem auto;
+    width: 95%;
+}
+
+.cartTableWrapper {
+    width: 100%;
+    max-height: 450px;         
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.cartTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--colorCardBackground);
+    min-width: 700px;
+}
+
+.cartTable a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartTable thead {
+    background: var(--colorPrimary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.cartTable th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--colorBorder);
+}
+
+.cartTable td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--colorBorder);
+}
+
+.cartTable td:last-child {
+    text-align: center;
+}
+
+.cartTable tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: 0.2s ease;
+}
+
+.quantityForm {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;   
+}
+
+.cartTable tfoot td {
+    background: var(--colorPrimary);
+    font-weight: bold;
+    padding: 1rem;
+}
+
+
+.quantityInput {
+    width: 70px;
+    padding: 0.4rem;
+    border-radius: 6px;
+    border: 1px solid var(--colorBorder);
+    background: var(--colorBackground);
+    color: var(--colorText);
+}
+
+.cartTable a,
+.orderButton,
+.updateButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: 
+        background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.15s ease,
+        box-shadow 0.25s ease;
+}
+
+.cartTable a {
+    background-color: transparent;
+    color: #ff4d4d;
+    border-color: #ff4d4d;
+}
+
+.cartTable a:hover {
+    background-color: #ff4d4d;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+}
+
+.updateButton {
+    background-color: transparent;
+    color: #f39c12;
+    border-color: #f39c12;
+}
+
+.updateButton:hover {
+    background-color: #f39c12;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+}
+
+.orderButton {
+    background-color: transparent;
+    color: #27ae60;
+    border-color: #27ae60;
+}
+
+.orderButton:hover {
+    background-color: #27ae60;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+/* change colors indipendently */
+.cartTable a {
+    --hover-color: #ff1900; 
+}
+
+/* Order button */
+.orderButton {
+    --hover-color: #27ae60;  
+}
+
+/* Update button */
+.updateButton {
+    --hover-color: #f39c12;  
+}
 
 /*============================================================================*/
 /*============================== footer Styling =============================*/

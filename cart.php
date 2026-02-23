@@ -72,7 +72,7 @@ if (!empty($_SESSION['cart'])): ?>
             ?>
                 <tr>
                     <td><?= htmlspecialchars($item['name']); ?></td>
-                    <td><?= number_format($item['price'], 2); ?> €</td>
+                    <td>€ <?= number_format($item['price'], 2); ?></td>
                     <td>
                         <form action="cart.php" method="post" class="quantityForm">
                             <input type="hidden" name="id" value="<?= $id ?>">
@@ -80,17 +80,20 @@ if (!empty($_SESSION['cart'])): ?>
                             <button type="submit" class="updateButton">Update</button>
                         </form>
                     </td>
-                    <td><?= number_format($subtotal, 2); ?> €</td>
+                    <td>€ <?= number_format($subtotal, 2); ?></td>
                     <td><a href="cart.php?remove=<?= $id; ?>">Remove</a></td>
                 </tr>
             <?php endforeach; ?>
-            <tr>
-                <td colspan="3"><strong>Total</strong></td>
-                <td colspan="1"><strong><?= number_format(getCartTotal(), 2); ?> €</strong></td>
-                <td>
-                    <form action="cart.php" method="GET"><button type="submit" name="order" class="orderButton">Order now</button></form>
-                </td>
-            </tr>
+                <tr>
+                    <td colspan="3"><strong>Total</strong></td>
+                    <td colspan="1"><strong>€ <?= number_format(getCartTotal(), 2); ?></strong></td>
+                    <td colspan="1">
+                        <form action="cart.php" method="GET" class="orderForm">
+                            <button type="submit" name="order" class="orderButton">Order now</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </section>
 <?php else: ?>

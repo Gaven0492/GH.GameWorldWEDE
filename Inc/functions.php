@@ -247,7 +247,7 @@ function DisplayGames($categoryId)
             <div class="cardContent">
                 <h3 class="cardTitle"><?php echo htmlspecialchars($game["gameName"]); ?></h3>
                 <div class="cardButtons">
-                    <form method="post" action="cart.php">
+                    <form method="POST" action="cart.php">
                         <input type="hidden" name="add" value="<?php echo $game['gameId']; ?>">
                         <button type="submit" class="cardButton addToCartButton submitButton">
                             <span>
@@ -274,12 +274,12 @@ function addToCart($gameId)
 {
     $db = DbConnect();
     $statement = $db->prepare("SELECT gameId, gameName, gamePrice FROM game WHERE gameId = ?");
-    $statement->bind_param("i", $gameId);
-    $statement->execute();
-    $result = $statement->get_result();
-    $game = $result->fetch_assoc();
-    $statement->close();
-    $db->close();
+    $statement -> bind_param("i", $gameId);
+    $statement -> execute();
+    $result = $statement -> get_result();
+    $game = $result -> fetch_assoc();
+    $statement -> close();
+    $db -> close();
 
     if ($game) {
         if (!isset($_SESSION["cart"])) {

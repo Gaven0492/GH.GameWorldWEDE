@@ -65,6 +65,7 @@ function HTMLcategories()
 {
     $categories = GetCategories();
 ?>
+
     <nav>
         <ul class="navMenu" id="navMenu">
             <?php foreach ($categories as $category): ?>
@@ -273,7 +274,7 @@ function DisplayGames($categoryId)
 function addToCart($gameId)
 {
     $db = DbConnect();
-    $statement = $db->prepare("SELECT gameId, gameName, gamePrice FROM game WHERE gameId = ?");
+    $statement = $db -> prepare("SELECT gameId, gameName, gameImg, gamePrice FROM game WHERE gameId = ?");
     $statement -> bind_param("i", $gameId);
     $statement -> execute();
     $result = $statement -> get_result();
@@ -285,17 +286,21 @@ function addToCart($gameId)
         if (!isset($_SESSION["cart"])) {
             $_SESSION["cart"] = [];
         }
+
         if (isset($_SESSION["cart"][$gameId])) {
             $_SESSION["cart"][$gameId]["quantity"]++;
         } else {
             $_SESSION["cart"][$gameId] = [
                 "name" => $game["gameName"],
+                "image" => $game["gameImg"],
                 "price" => $game["gamePrice"],
                 "quantity" => 1
             ];
         }
+
         return true;
     }
+    
     return false;
 }
 

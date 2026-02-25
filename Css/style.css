@@ -10,21 +10,21 @@
 
 :root{
     /*== Background Colors ==*/
-    --colorBackground: #1a1625;
-    --colorCardBackground: #2d2640;
+    --colorBackground: #C6A85A;
+    --colorCardBackground: #2C3E50;
     
     /*== Text Colors ==*/
     --colorText: #ffffff;
     --colorTextDark: #000000;
     
     /*== Primary Colors ==*/
-    --colorPrimary: #4a4363;
-    --colorHover: #736694;   
+    --colorPrimary: #0F1B2D;
+    --colorHover: #46321e;   
     
     /*== Accent Colors ==*/
-    --colorBorder: #3a3150;
-    --colorAccent: #ff98b4;
-    --colorSecondary: #d39bf8;
+    --colorBorder: #6B5842;
+    --colorAccent: #fa9ff2;
+    --colorSecondary: #3A4E63;
     
     /*== Shadow ==*/
     --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -36,7 +36,14 @@ body {
     background: var(--colorBackground);
     color: var(--colorText);
     overflow-x: hidden;
+
+    background: linear-gradient(rgba(0, 0, 0, 0.5)), url("../Img/GameWorldBackground.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 0;
 }
+
 
 /*============================================================================*/
 /*============================= Header Styling ==============================*/
@@ -47,7 +54,7 @@ body {
     width: 100%;
     background: var(--colorPrimary);
     backdrop-filter: blur(20px);
-    box-shadow: var(--shadow);
+    border-bottom: 2px solid var(--colorBorder);
     padding: .5rem 5%;
     z-index: 1000;
 }
@@ -167,6 +174,7 @@ nav{
     border-radius: 20px;
     overflow: hidden;
     background-color: var(--colorPrimary);
+    border: 2px solid var(--colorBorder);
 }
 
 .navMenu li {
@@ -241,29 +249,30 @@ nav{
 /*============================== game Styling ===============================*/
 /*==========================================================================*/
 
-.cardSection{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    margin: 3rem 2rem 0 2rem;
-    gap: 2rem;
+.cardSection {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 2rem;
+    margin: 3rem auto;
+    max-width: 1200px;
 }
 
-.card{
+.card {
     display: flex;
     flex-direction: column;
-    background-color: var(--colorCardBackground);
+    width: 250px;
+    background-color: var(--colorBackground);
     box-shadow: var(--shadow);
-    overflow: hidden;
-    border: 2px solid var(--colorPrimary);
-    position: relative;
+    border: 2px solid var(--colorBorder);
     border-radius: 12px;
+    overflow: hidden;
 }
 
 /*============================================================================*/
 /*=========================== Card image section ============================*/
 .cardImage {
-    height: 280px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -283,7 +292,7 @@ nav{
 }
 
 .categoryLogo img {
-    width: 40px;  
+    width: 35px;  
     height: auto;
 }
 
@@ -324,7 +333,7 @@ nav{
     color: var(--colorText);
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: .8rem;
     border: 2px var(--colorText);
     border-style: dashed dashed solid;
     font-weight: bold;
@@ -334,13 +343,14 @@ nav{
 /*============================================================================*/
 /*=========================== Card content section ==========================*/
 .cardContent {
-    background-color: var(--colorCardBackground);
+    background-color: var(--colorPrimary);
     padding: 1rem;
 }
 
 .cardTitle {
     max-width: 80%;
     min-height: 50px;
+    font-size: 1rem;
     margin: 0 auto 1rem auto;
     display: flex;
     justify-content: center; 
@@ -363,11 +373,12 @@ nav{
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 500;
 }
 
 .cardButton {
+    border: 2px solid var(--colorBorder);
     background-color: var(--colorPrimary);
     position: relative;
     overflow: hidden;
@@ -403,7 +414,7 @@ nav{
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--colorHover);
+    background: var(--colorBackground);
     border-radius: 8px;
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
@@ -462,7 +473,7 @@ nav{
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--colorHover);
+    background: var(--colorBackground);
     border-radius: 8px;
     -webkit-transform: scaleX(0);
     transform: scaleX(0);
@@ -519,7 +530,7 @@ nav{
 form{
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 1.5em;
 }
 
 form h1{
@@ -585,29 +596,6 @@ form h1{
     z-index: 2;
 }
 
-
-/*============================================================================*/
-/*============ Different background colors for each social media ============*/
-.socials ul li a:hover:before{
-    top: 0;
-}
-
-.socials ul li:nth-child(1) a:before{
-    background: #db4437; /* Google Red */
-}
-
-.socials ul li:nth-child(2) a:before{
-    background: #1877F2 ; /* Facebook Blue */
-}
-
-.socials ul li:nth-child(3) a:before {
-    background: #6e5494; /* GitHub Purple */
-}
-
-.socials ul li:nth-child(4) a:before {
-    background: #0a66c2 ; /* LinkedIn Blue */
-}
-
 input{
     padding: 0.8em;
     border: 2px solid var(--colorBorder);
@@ -642,22 +630,42 @@ input{
 
 
 /*============================================================================*/
+/*============ Different background colors for each social media ============*/
+.socials ul li a:hover:before{
+    top: 0;
+}
+
+.socials ul li:nth-child(1) a:before{
+    background: #db4437; /* Google Red */
+}
+
+.socials ul li:nth-child(2) a:before{
+    background: #1877F2 ; /* Facebook Blue */
+}
+
+.socials ul li:nth-child(3) a:before {
+    background: #6e5494; /* GitHub Purple */
+}
+
+.socials ul li:nth-child(4) a:before {
+    background: #0a66c2 ; /* LinkedIn Blue */
+}
+
+
+/*============================================================================*/
 /*=============================== Cart Styling ==============================*/
 /*==========================================================================*/
 
-.cartSection {
+.cartSection{
     display: flex;
     justify-content: center;
-    margin: 3rem auto;
+    margin: 2rem auto;
     width: 95%;
 }
 
-.cartTableWrapper {
-    width: 100%;
-    max-height: 450px;         
-    overflow-y: auto;
+.cartTableWrapper{
     border-radius: 12px;
-    box-shadow: var(--shadow);
+    overflow-y: auto;
 }
 
 .cartTable {
@@ -667,20 +675,14 @@ input{
     min-width: 700px;
 }
 
-.cartTable a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cartTable thead {
+.cartTable thead{
     background: var(--colorPrimary);
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
-.cartTable th {
+.cartTable thead tr th{
     padding: 1rem;
     text-align: left;
     font-weight: 600;
@@ -688,33 +690,26 @@ input{
     border-bottom: 2px solid var(--colorBorder);
 }
 
-.cartTable tbody td{
-    width: 20%;
+.cartTable tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: 0.2s ease;
 }
 
-.cartTable tbody td {
+.cartTable tbody td{
     padding: 1rem;
     border-bottom: 1px solid var(--colorBorder);
 }
 
-.cartTable tbody td:last-child {
+.productCell{
+    display: flex;
+}
+
+.cartTable tbody td:last-child{
     text-align: center;
 }
 
-.cartTable tbody td .orderForm {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-}
-
-.cartTable tbody td .orderForm button {
-    flex-grow: 1;
-    font-weight: 500;
-}
-
-.cartTable tbody tr:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    transition: 0.2s ease;
+.cartTable tbody td p{
+    margin: auto 10px;
 }
 
 .quantityForm{
@@ -733,88 +728,53 @@ input{
     padding: 0.7rem;
     border-radius: 6px;
     border: 1px solid var(--colorBorder);
-    background: var(--colorBackground);
+    background: var(--colorPrimary);
     color: var(--colorText);
 }
 
-.cartTable a,
-.orderButton,
-.updateButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.7rem 1rem;
-    border-radius: 8px;
-    font-weight: 500;
+.btn {
+  height: auto;
+  padding: .5rem 1rem;
+  
+  border-radius: 8px;
+  border: 1px solid var(--colorBorder);
+  color: var(--colorText);
+  cursor: pointer;
+  transition: 0.5s;
     text-decoration: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: 
-        background-color 0.25s ease,
-        color 0.25s ease,
-        transform 0.15s ease,
-        box-shadow 0.25s ease;
+  background: linear-gradient(
+    90deg,
+    var(--c1, var(--colorPrimary)),
+    var(--c2, var(--colorBackground)) 51%,
+    var(--c1, var(--colorPrimary))
+  ) var(--x, 0) / 200%;
+
+  text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }
 
-.cartTable a {
-    background-color: transparent;
-    color: #ff4d4d;
-    border-color: #ff4d4d;
+.btn:hover {
+  --x: 100%;
 }
 
-.cartTable a:hover {
-    background-color: #ff4d4d;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+.btn-remove {
+  --c1: var(--colorBackground);
+  --c2: var(--colorPrimary);
 }
 
-.updateButton {
-    background-color: transparent;
-    color: #f39c12;
-    border-color: #f39c12;
+.btn-update {
+  --c1: var(--colorBackground);
+  --c2: var(--colorPrimary);
 }
 
-.updateButton:hover {
-    background-color: #f39c12;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
-}
-
-.orderButton {
-    background-color: transparent;
-    color: #27ae60;
-    border-color: #27ae60;
-}
-
-.orderButton:hover {
-    background-color: #27ae60;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
-}
-
-/* change colors indipendently */
-.cartTable a {
-    --hover-color: #ff1900; 
-}
-
-/* Order button */
-.orderButton {
-    --hover-color: #27ae60;  
-}
-
-/* Update button */
-.updateButton {
-    --hover-color: #f39c12;  
+.btn-order {
+  --c1: var(--colorBackground);
+  --c2: var(--colorPrimary);
 }
 
 /*============================================================================*/
 /*============================== footer Styling =============================*/
 /*==========================================================================*/
 footer {
-    background-color: var(--colorPrimary);
     color: var(--colorText);
     text-align: center;
     padding: 1rem 0;

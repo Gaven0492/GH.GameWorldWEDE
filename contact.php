@@ -27,7 +27,7 @@ HTMLnavBar();
 
             <input type="text" id="fname" name="fname" placeholder="First name" >
             <input type="text" id="lname" name="lname" placeholder="Last name" >
-
+            <input type="text" id="address" name="address" placeholder="Address">
             <input type="email" id="email" name="email" placeholder="Email">
             <input type="text" id="message" name="message" placeholder="Message">
 

@@ -10,23 +10,13 @@ session_start();
 // handle cart operators
 if (isset($_POST["add"])) {
     $gameId = intval($_POST["add"]);
-    $game = GetGameById($gameId); 
 
-    if ($game) {
-        if (!isset($_SESSION["cart"])) {
-            $_SESSION["cart"] = [];
-        }
-        if (isset($_SESSION["cart"][$gameId])) {
-            $_SESSION["cart"][$gameId]["quantity"]++;
-        } else {
-            $_SESSION["cart"][$gameId] = [
-                "name" => $game["gameName"],
-                "price" => $game["gamePrice"],
-                "quantity" => 1
-            ];
-        }
+    if (addToCart($gameId)) {
         $_SESSION["successMessage"] = "Game added to cart!";
+    } else {
+        $_SESSION["errorMessage"] = "Game not found!";
     }
+
     header("Location: cart.php");
     exit();
 }
@@ -67,29 +57,39 @@ if (!empty($_SESSION['cart'])): ?>
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ($_SESSION['cart'] as $id => $item):
-                $subtotal = $item['price'] * $item['quantity'];
+            <?php foreach ($_SESSION["cart"] as $id => $item):
+                $subtotal = $item["price"] * $item["quantity"];
             ?>
                 <tr>
-                    <td><?= htmlspecialchars($item['name']); ?></td>
-                    <td>€ <?= number_format($item['price'], 2); ?></td>
+                    <td class="productCell">
+                        <?php
+                        $image = $item["image"] ?? "default.jpg";
+                        $name  = $item["name"] ?? "Unknown Game";
+                        ?>
+
+                        <img src="Img/<?php echo htmlspecialchars($image); ?>" 
+                            alt="<?php echo htmlspecialchars($name); ?>" 
+                            width="80">
+                        <p><?= htmlspecialchars($name); ?></p>
+                    </td>
+                    <td>€ <?= number_format($item["price"], 2); ?></td>
                     <td>
                         <form action="cart.php" method="post" class="quantityForm">
                             <input type="hidden" name="id" value="<?= $id ?>">
-                            <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1" class="quantityInput">
-                            <button type="submit" class="updateButton">Update</button>
+                            <input type="number" name="quantity" value="<?= $item["quantity"] ?>" min="1" class="quantityInput">
+                            <button type="submit" id="updateButton" class="btn btn-order"><strong>Update</strong></button>
                         </form>
                     </td>
                     <td>€ <?= number_format($subtotal, 2); ?></td>
-                    <td><a href="cart.php?remove=<?= $id; ?>">Remove</a></td>
+                    <td><a id="removeButton" class="btn btn-order" href="cart.php?remove=<?= $id; ?>"><strong>Remove</strong></a></td>
                 </tr>
             <?php endforeach; ?>
                 <tr>
                     <td colspan="3"><strong>Total</strong></td>
-                    <td colspan="1"><strong>€ <?= number_format(getCartTotal(), 2); ?></strong></td>
-                    <td colspan="1">
+                    <td><strong>€ <?= number_format(getCartTotal(), 2); ?></strong></td>
+                    <td>
                         <form action="cart.php" method="GET" class="orderForm">
-                            <button type="submit" name="order" class="orderButton">Order now</button>
+                            <button type="submit" name="order" class="btn btn-order" id="orderButton"><strong>Order now</strong></button>
                         </form>
                     </td>
                 </tr>

@@ -15,14 +15,21 @@ function HTMLhead(){
     <head>
         <meta name="author" content="Gaven Mikkers">
         <meta name="description" content="A store where you can buy games for different platforms">
-        <meta charset="UTF-8">
+
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kings&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Kings&family=MedievalSharp&family=Quintessential&display=swap" rel="stylesheet">
+
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="icon" type="image/png" href="Img/GameWorldLogo.png">
+        <link rel="icon" type="image/png" href="Img/Coat_of_Arms.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>GameWorld</title>
         <link rel="stylesheet" href="Css/style.css">
         <script src="Js/script.js" defer></script>
-        
+        <meta charset="UTF-8">
     </head>
 <?php
 }
@@ -37,10 +44,10 @@ function HTMLnavBar()
 <body>
     <header class="header">
         <div class="headerContainer">
-            <div class="logo glitchCard">
-                <a href="index.php" class="glitchEffect">
-                    <img src="Img/GameWorldLogo.png" alt="GameWorld Logo" class="LogoImage">
-                    <h1 class="LogoText">ameWorld</h1>
+            <div class="headerLogo">
+                <a href="index.php" class="gameWorldLogo">
+                    <img src="Img/Coat_of_Arms.png" alt="GameWorld Logo" class="LogoImageV1">
+                    <img src="Img/GameWorldLogoV2.png" alt="GameWorld Logo" class="LogoImageV2">
                 </a>
                 <h2 class="LogoSubText">Your Game Store</h2>
             </div>
@@ -48,7 +55,7 @@ function HTMLnavBar()
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="contact.php"><i class="fa-solid fa-user"></i> Contact</a></li>
-                    <li><a href="#">About</a></li>
+                    <li><a href="about.php">About</a></li>
                     <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
                 </ul>
             </nav>

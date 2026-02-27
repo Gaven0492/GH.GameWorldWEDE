@@ -6,7 +6,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
+
 
 :root{
     /*== Background Colors ==*/
@@ -19,15 +21,13 @@
     
     /*== Primary Colors ==*/
     --colorPrimary: #0F1B2D;
-    --colorHover: #46321e;   
+    --colorSecondary: #3A4E63;
     
     /*== Accent Colors ==*/
     --colorBorder: #6B5842;
-    --colorAccent: #fa9ff2;
-    --colorSecondary: #3A4E63;
-    
-    /*== Shadow ==*/
-    --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --colorAccent: #725e47;
+    --colorHeart: #fa9ff2;
+    --colorHover: #46321e;   
 }
 
 
@@ -54,7 +54,7 @@ body {
     width: 100%;
     background: var(--colorPrimary);
     backdrop-filter: blur(20px);
-    border-bottom: 2px solid var(--colorBorder);
+    border-bottom: 4px solid var(--colorBorder);
     padding: .5rem 5%;
     z-index: 1000;
 }
@@ -69,41 +69,42 @@ body {
 
 /*============================================================================*/
 /*============================== Logo Styling ===============================*/
-.logo {
+.headerLogo {
     display: flex;
     align-items: flex-end;
     gap: 0.75rem;
 }
 
-.logo a {
+.headerLogo a {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 1.3rem;
     text-decoration: none;
     color: var(--colorText);
     transition: opacity 0.3s ease;
 }
 
-.logo a:hover {
+.headerLogo a:hover {
     opacity: 0.6;
 }
 
-.LogoImage {
-    height: 40px;
-    width: 45px;
+.LogoImageV1 {
+    height: auto;
+    width: 6rem;
     background-color: var(--colorPrimary);
 }
 
-.LogoText {
-    font-size: 2.5rem;
-    font-weight: bold;
-    letter-spacing: 2px;
+.LogoImageV2 {
+    height: auto;
+    width: 17rem;
+    background-color: var(--colorPrimary);
 }
 
 .LogoSubText {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 200;
-    font-style: italic;
+    font-family: "Kings", cursive;
+    color: var(--colorBackground);
 }
 
 /*============================================================================*/
@@ -116,11 +117,12 @@ body {
     gap: .5rem;
     list-style: none;
     text-decoration: none;
+    font-family: "MedievalSharp", cursive;
 }
 
 .socialMenu ul li a {
     position: relative;
-    color: var(--colorText);
+    color: var(--colorBackground);
     background-color: var(--colorPrimary);
     text-decoration: none;
     font-size: 1.1rem;
@@ -135,7 +137,7 @@ body {
     position: absolute;
     width: 100%;
     height: 2px;
-    background: var(--colorText);
+    background: var(--colorBorder);
     bottom: -5px;
     left: 0;
     transform: scaleX(0);
@@ -163,6 +165,7 @@ nav{
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: "MedievalSharp", cursive;
 }
 
 .navMenu {
@@ -179,10 +182,13 @@ nav{
 
 .navMenu li {
     flex: 1;               
-    text-align: center;    
+    text-align: center;  
 }
 
 .navMenu li a {
+    display: flex;             
+    align-items: center;       
+    justify-content: center;   
     position: relative;
     display: block;        
     color: var(--colorText);
@@ -194,7 +200,7 @@ nav{
 .navMenu li a img {
     height: 25px;
     width: 25px;
-    vertical-align: middle;
+    vertical-align:text-bottom;
     margin-right: 0.5rem;
 }
 
@@ -236,14 +242,20 @@ nav{
     margin: 20px auto;
     max-width: 800px;
     min-height: fit-content;
+    color: var(--colorBackground);
 }
 
 .heroTitle {
-    font-size: 3rem;
+    font-size: 4rem;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 8px var(--colorAccent);
+    font-family: "Kings", cursive;
 }
 
-
+.heroSubtitle{
+    font-size: 1.2rem;
+    font-family: "MedievalSharp", cursive;
+}
 
 /*============================================================================*/
 /*============================== game Styling ===============================*/
@@ -317,7 +329,7 @@ nav{
 }
 
 .wishlistButton.active i {
-    color: var(--colorAccent);
+    color: var(--colorHeart);
 }
 
 .wishlistButton.active i::before {
@@ -391,8 +403,7 @@ nav{
 
 /*============================================================================*/
 /*=============================  Sweep to right =============================*/
-.addToCartButton, 
-.submitButton {
+.addToCartButton {
     display: inline-block;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
@@ -405,8 +416,7 @@ nav{
     transition-duration: 0.3s;
 }
 
-.addToCartButton:before, 
-.submitButton:before {
+.addToCartButton:before {
     content: "";
     position: absolute;
     z-index: -1;
@@ -430,19 +440,13 @@ nav{
 
 .addToCartButton:hover, 
 .addToCartButton:focus, 
-.addToCartButton:active, 
-.submitButton:hover, 
-.submitButton:focus, 
-.submitButton:active {
+.addToCartButton:active {
     color: var(--colorText);
 }
 
 .addToCartButton:hover:before, 
 .addToCartButton:focus:before, 
-.addToCartButton:active:before, 
-.submitButton:hover:before, 
-.submitButton:focus:before, 
-.submitButton:active:before {
+.addToCartButton:active:before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
 }
@@ -450,8 +454,7 @@ nav{
 
 /*============================================================================*/
 /*=============================  Sweep to left ==============================*/
-.buyNowButton,
-.resetButton{
+.buyNowButton{
     display: inline-block;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
@@ -464,8 +467,7 @@ nav{
     transition-duration: 0.3s;
 }
 
-.buyNowButton:before,
-.resetButton:before{
+.buyNowButton:before{
     content: "";
     position: absolute;
     z-index: -1;
@@ -489,19 +491,13 @@ nav{
 
 .buyNowButton:hover,
 .buyNowButton:focus,
-.buyNowButton:active,
-.resetButton:hover,
-.resetButton:focus,
-.resetButton:active {
+.buyNowButton:active {
     color: var(--colorText);
 }
 
 .buyNowButton:hover:before,
 .buyNowButton:focus:before,
-.buyNowButton:active:before,
-.resetButton:hover:before,
-.resetButton:focus:before,
-.resetButton:active:before {
+.buyNowButton:active:before {
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
 }
@@ -522,7 +518,7 @@ nav{
     padding: 2em;
     border: 2px solid var(--colorBorder);
     border-radius: 12px;
-    box-shadow: 2px 4px 10px var(--colorTextDark);
+    box-shadow: 4px 4px 12px var(--colorAccent);
     backdrop-filter: blur(10px);
     width: 40%;
 }
@@ -535,15 +531,22 @@ form{
 
 form h1{
     text-align: center;
-    text-shadow: 0 0 15px var(--colorTextDark);
     margin-bottom: 1.5rem;
+    text-shadow: 0px 2px 8px var(--colorAccent);
+}
+
+.mediaContact{
+    background: var(--colorPrimary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid var(--colorBorder);
 }
 
 .socials{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1.5em;
+    background: transparent;
 }   
 
 .socials ul{
@@ -596,7 +599,18 @@ form h1{
     z-index: 2;
 }
 
-input{
+.formContact{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: .7rem;
+    background: var(--colorCardBackground);
+    border-radius: 8px;
+    padding: 2rem;
+    border: 2px solid var(--colorBorder);
+}
+
+.formContact input{
     padding: 0.8em;
     border: 2px solid var(--colorBorder);
     background: rgba(0, 0, 0, 0.5);
@@ -611,23 +625,73 @@ input{
     margin-top: 1.5rem;
 }
 
-#submit, #reset{
-    display: flex;
-    justify-content: center;
-    width: 40%;
-    gap: 1em;
-    padding: 1em 3em;
-    background: var(--colorPrimary);
+#submitButton {
+    flex: 1;
+    font-size: 1.1rem;
+    padding: 0.7rem 1.5rem; 
+    min-height: 40px;       
+    border-radius: 8px;
+    border: 1px solid var(--colorBorder);
     color: var(--colorText);
+    cursor: pointer;
+    transition: 0.5s;
     text-decoration: none;
-    font-size: 1rem;
-    letter-spacing: 2px;
-    border: 2px solid var(--colorBorder);
-    transition: all .5s;
-    border-radius: 12px;
-    box-shadow: 2px 4px 10px var(--colorTextDark);
+    display: inline-flex;       
+    align-items: center;       
+    justify-content: center;   
+
+    background: linear-gradient(
+        90deg,
+        var(--c1, var(--colorPrimary)),
+        var(--c2, var(--colorBackground)) 51%,
+        var(--c1, var(--colorPrimary))
+    );
+    background-size: 200% 100%;
+    background-position: var(--x, 0%) 0;
+
+    text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }
 
+#resetButton {
+    flex: 1;
+    font-size: 1.1rem;
+    padding: 0.7rem 1.5rem; 
+    min-height: 40px;       
+    border-radius: 8px;
+    border: 1px solid var(--colorBorder);
+    color: var(--colorText);
+    cursor: pointer;
+    transition: 0.5s;
+    text-decoration: none;
+    display: inline-flex;       
+    align-items: center;       
+    justify-content: center;   
+
+    background: linear-gradient(
+        90deg,
+        var(--c3, var(--colorPrimary)),
+        var(--c4, var(--colorBackground)) 51%,
+        var(--c3, var(--colorPrimary))
+    );
+    background-size: 200% 100%;
+    background-position: var(--x, 0%) 0;
+
+    text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.contactButton:hover {
+    --x: 100%;
+}
+
+.submitButton {
+    --c1: var(--colorPrimary);
+    --c2: var(--colorBackground);
+}
+
+.resetButton {
+    --c4: var(--colorBackground);
+    --c3: var(--colorPrimary);
+}
 
 /*============================================================================*/
 /*============ Different background colors for each social media ============*/
@@ -716,7 +780,7 @@ input{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .quantityForm .updateButton{
@@ -732,43 +796,46 @@ input{
     color: var(--colorText);
 }
 
-.btn {
-  height: auto;
-  padding: .5rem 1rem;
-  
-  border-radius: 8px;
-  border: 1px solid var(--colorBorder);
-  color: var(--colorText);
-  cursor: pointer;
-  transition: 0.5s;
+.cartButton {
+    height: auto;
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    border-radius: 8px;
+    border: 1px solid var(--colorBorder);
+    color: var(--colorText);
+    cursor: pointer;
+    transition: 0.5s;
     text-decoration: none;
-  background: linear-gradient(
-    90deg,
-    var(--c1, var(--colorPrimary)),
-    var(--c2, var(--colorBackground)) 51%,
-    var(--c1, var(--colorPrimary))
-  ) var(--x, 0) / 200%;
 
-  text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    background: linear-gradient(
+        90deg,
+        var(--c1, var(--colorPrimary)),
+        var(--c2, var(--colorBackground)) 51%,
+        var(--c1, var(--colorPrimary))
+    );
+    background-size: 200% 100%;
+    background-position: var(--x, 0%) 0;
+
+    text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }
 
-.btn:hover {
-  --x: 100%;
+.cartButton:hover {
+    --x: 100%;
 }
 
-.btn-remove {
-  --c1: var(--colorBackground);
-  --c2: var(--colorPrimary);
+.buttonRemove {
+    --c1: var(--colorBackground);
+    --c2: var(--colorPrimary);
 }
 
-.btn-update {
-  --c1: var(--colorBackground);
-  --c2: var(--colorPrimary);
+.buttonUpdate {
+    --c1: var(--colorBackground);
+    --c2: var(--colorPrimary);
 }
 
-.btn-order {
-  --c1: var(--colorBackground);
-  --c2: var(--colorPrimary);
+.buttonOrder {
+    --c1: var(--colorBackground);
+    --c2: var(--colorPrimary);
 }
 
 /*============================================================================*/

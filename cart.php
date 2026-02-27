@@ -29,10 +29,14 @@ if (isset($_GET["remove"])){
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["id"], $_POST["quantity"])){
-    if (updateCartQuantity($_POST["id"], $_POST["quantity"])){
-        $_SESSION["successMessage"] = "Cart updated succesfully";
+if (isset($_POST["id"]) && isset($_POST["quantity"])) {
+    $id = intval($_POST["id"]);
+    $quantity = max(1, intval($_POST["quantity"]));
+
+    if (updateCartQuantity($id, $quantity)) {
+        $_SESSION["successMessage"] = "Cart updated successfully";
     }
+
     header("Location: cart.php");
     exit();
 }
@@ -76,12 +80,11 @@ if (!empty($_SESSION['cart'])): ?>
                     <td>
                         <form action="cart.php" method="post" class="quantityForm">
                             <input type="hidden" name="id" value="<?= $id ?>">
-                            <input type="number" name="quantity" value="<?= $item["quantity"] ?>" min="1" class="quantityInput">
-                            <button type="submit" id="updateButton" class="btn btn-order"><strong>Update</strong></button>
+                            <input type="number" name="quantity" value="<?= $item["quantity"] ?>" min="1" class="quantityInput" onchange="this.form.submit()">
                         </form>
                     </td>
                     <td>€ <?= number_format($subtotal, 2); ?></td>
-                    <td><a id="removeButton" class="btn btn-order" href="cart.php?remove=<?= $id; ?>"><strong>Remove</strong></a></td>
+                    <td><a id="removeButton" class="cartButton buttonRemove" href="cart.php?remove=<?= $id; ?>"><strong>Remove</strong></a></td>
                 </tr>
             <?php endforeach; ?>
                 <tr>
@@ -89,7 +92,7 @@ if (!empty($_SESSION['cart'])): ?>
                     <td><strong>€ <?= number_format(getCartTotal(), 2); ?></strong></td>
                     <td>
                         <form action="cart.php" method="GET" class="orderForm">
-                            <button type="submit" name="order" class="btn btn-order" id="orderButton"><strong>Order now</strong></button>
+                            <button type="submit" name="order" class="cartButton buttonOrder" id="orderButton"><strong>Order now</strong></button>
                         </form>
                     </td>
                 </tr>

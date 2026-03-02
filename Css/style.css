@@ -6,7 +6,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
 }
 
 
@@ -24,9 +23,9 @@
     --colorSecondary: #3A4E63;
     
     /*== Accent Colors ==*/
-    --colorBorder: #6B5842;
+    --colorBorder: #9e7b52;
     --colorAccent: #725e47;
-    --colorHeart: #fa9ff2;
+    --colorHeart: #ff3d3d;
     --colorHover: #46321e;   
 }
 
@@ -100,13 +99,6 @@ body {
     background-color: var(--colorPrimary);
 }
 
-.LogoSubText {
-    font-size: 1.3rem;
-    font-weight: 200;
-    font-family: "Kings", cursive;
-    color: var(--colorBackground);
-}
-
 /*============================================================================*/
 /*=========================== socialmenu Styling ============================*/
 /*==========================================================================*/
@@ -117,7 +109,7 @@ body {
     gap: .5rem;
     list-style: none;
     text-decoration: none;
-    font-family: "MedievalSharp", cursive;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 .socialMenu ul li a {
@@ -165,7 +157,6 @@ nav{
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "MedievalSharp", cursive;
 }
 
 .navMenu {
@@ -249,12 +240,10 @@ nav{
     font-size: 4rem;
     margin-bottom: 20px;
     text-shadow: 2px 2px 8px var(--colorAccent);
-    font-family: "Kings", cursive;
 }
 
 .heroSubtitle{
     font-size: 1.2rem;
-    font-family: "MedievalSharp", cursive;
 }
 
 /*============================================================================*/
@@ -345,7 +334,7 @@ nav{
     color: var(--colorText);
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    font-size: .8rem;
+    font-size: .9rem;
     border: 2px var(--colorText);
     border-style: dashed dashed solid;
     font-weight: bold;
@@ -625,72 +614,56 @@ form h1{
     margin-top: 1.5rem;
 }
 
-#submitButton {
+.formButtons button{
     flex: 1;
     font-size: 1.1rem;
-    padding: 0.7rem 1.5rem; 
-    min-height: 40px;       
+    padding: 0.7rem 1.5rem;
+    min-height: 40px;
     border-radius: 8px;
     border: 1px solid var(--colorBorder);
     color: var(--colorText);
     cursor: pointer;
     transition: 0.5s;
     text-decoration: none;
-    display: inline-flex;       
-    align-items: center;       
-    justify-content: center;   
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     background: linear-gradient(
-        90deg,
-        var(--c1, var(--colorPrimary)),
-        var(--c2, var(--colorBackground)) 51%,
-        var(--c1, var(--colorPrimary))
+        var(--angle),
+        var(--c1),
+        var(--c2) 51%,
+        var(--c1)
     );
+
     background-size: 200% 100%;
-    background-position: var(--x, 0%) 0;
+    background-position: var(--start, 0%) 0;
 
     text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.formButtons button:hover {
+    background-position: var(--end, 100%) 0;
+}
+
+#submitButton {
+    --c1: var(--colorPrimary);
+    --c2: var(--colorBackground);
+
+    --angle: 90deg;
+
+    --start: 0%;
+    --end: 100%;
 }
 
 #resetButton {
-    flex: 1;
-    font-size: 1.1rem;
-    padding: 0.7rem 1.5rem; 
-    min-height: 40px;       
-    border-radius: 8px;
-    border: 1px solid var(--colorBorder);
-    color: var(--colorText);
-    cursor: pointer;
-    transition: 0.5s;
-    text-decoration: none;
-    display: inline-flex;       
-    align-items: center;       
-    justify-content: center;   
-
-    background: linear-gradient(
-        90deg,
-        var(--c3, var(--colorPrimary)),
-        var(--c4, var(--colorBackground)) 51%,
-        var(--c3, var(--colorPrimary))
-    );
-    background-size: 200% 100%;
-    background-position: var(--x, 0%) 0;
-
-    text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-}
-
-.contactButton:hover {
-    --x: 100%;
-}
-
-.submitButton {
     --c1: var(--colorPrimary);
     --c2: var(--colorBackground);
-}
 
-.resetButton {
-    --c4: var(--colorBackground);
-    --c3: var(--colorPrimary);
+    --angle: 90deg;
+
+    --start: 100%;
+    --end: 0%;
 }
 
 /*============================================================================*/
@@ -837,6 +810,91 @@ form h1{
     --c1: var(--colorBackground);
     --c2: var(--colorPrimary);
 }
+
+
+/*============================================================================*/
+/*=============================== About us CSS ==============================*/
+/*==========================================================================*/
+.aboutPage{
+    max-width: 1200px;
+    margin: 60px auto 3rem auto;
+    padding: 0 30px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+}
+
+.aboutPage section{
+    margin-bottom: 3rem;
+}
+
+.aboutPage section h2{
+    color: var(--colorBackground);
+    margin-bottom: 1rem;
+    border-left: 5px solid var(--colorBorder);
+    padding-left: 1rem;
+}
+
+.aboutPage section p{
+    margin-bottom: 2rem;
+    color: var(--colorBorder);
+}
+
+.aboutPage section article {
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--colorBorder);
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 12px var(--colorAccent);
+}
+
+.aboutPage section article h3 {
+    color: var(--colorBackground);
+    margin-bottom: 10px;
+}
+
+.aboutPage section article p {
+    color: var(--colorBorder);
+}
+
+.aboutPage aside{
+    position: sticky;
+    top: 120px;
+    align-self: start;
+}
+
+.aboutPage aside .sideCard{
+    background-color: var(--colorPrimary);
+    border: 2px solid var(--colorBorder);
+    color: #fff;
+    border-radius: 10px;
+    padding: 28px;
+}
+
+.aboutPage aside #sideCard1{
+    margin-bottom: 14px;
+}
+
+.aboutPage aside .sideCard .teamCard{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+
+.aboutPage aside .sideCard h3{
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.aboutPage aside .sideCard p{
+    line-height: 1.8;
+    color: #fff;
+    text-decoration: none;
+}
+
 
 /*============================================================================*/
 /*============================== footer Styling =============================*/

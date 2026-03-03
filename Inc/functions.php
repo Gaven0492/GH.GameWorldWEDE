@@ -344,4 +344,112 @@ function getCartTotal()
     }
     return $total;
 }
+
+
+
+function GetAllTrailers()
+{
+    $db = DbConnect();
+    $sql = "SELECT trailerId FROM trailer";
+    $result = $db->query($sql);
+    $trailers = $result->fetch_all(MYSQLI_ASSOC);
+    $db->close();
+    return $trailers;
+}
+
+
+/**
+ * function to get video URL for artist
+ * @param int $trailerId
+ * @return string|null $videoUrl
+ */
+function GetTrailerVideo($trailerId)
+{
+    $trailers = GetAllTrailers();
+
+    foreach ($trailers as $trailer) {
+        echo '<div class="videoCard">';
+        DisplayTrailerVideo($trailer["trailerId"]);
+        echo '</div>';
+    }
+    
+    if($trailer != null && !empty($trailer["trailerURL"]))
+    {
+        // Convert URL to embed URL
+        $embedUrl = ConvertToEmbedURL($trailer["trailerURL"]);
+        // Add parameters
+        $embedUrl = AddEmbedParameters($embedUrl);
+        
+        return $embedUrl;
+    }
+    
+    return null;
+}
+
+
+/**
+ * function to display trailer video
+ * @param int $trailerId
+ * @return void
+ */
+function DisplayTrailerVideo($trailerId)
+{
+    $trailer = GetAllTrailers($trailerId);
+    $embedUrl = GetTrailerVideo($trailerId);
+    
+    if($embedUrl != null)
+    {
+        ?>
+        <iframe class="video"
+                src="<?php echo $embedUrl; ?>"  
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen>
+        </iframe>
+        <?php
+    }
+}
+
+/**
+ * Convert YouTube watch URL to embed URL
+ * @param string $url
+ * @return string
+ */
+function ConvertToEmbedURL($url) 
+{
+    // video ID from YouTube URL
+    if (preg_match('/[?&]v=([^&]+)/', $url, $matches)) {
+        $videoId = $matches[1];
+        return "https://www.youtube.com/embed/" . $videoId;
+    }
+    // If already an embed URL or invalid return as is
+    return $url;
+}
+
+/**
+ * Add parameters to embed URL
+ * @param string $embedUrl
+ * @return string
+ */
+function AddEmbedParameters($embedUrl)
+{
+    // parameters: mute
+    $parameters = ["mute" => 1]; // mute by default
+
+    // if the URL already has query parameters
+    if (strpos($embedUrl, "?") === false) {
+        $separator = "?";
+    } else {
+        $separator = "&";
+    }
+
+    // add parameter to the URL
+    foreach ($parameters as $key => $value) {
+        $embedUrl .= $separator . $key . "=" . $value;
+        $separator = "&"; 
+    }
+
+    return $embedUrl;
+}
 ?>

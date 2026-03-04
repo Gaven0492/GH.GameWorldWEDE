@@ -5,7 +5,7 @@
 
 require_once "Inc/functions.php";
 
-$trailerId = isset($_GET["trailerId"]) ? intval($_GET["trailerId"]) : 1;
+$trailerId = isset($_GET["trailerId"]) ? (int)$_GET["trailerId"] : 1;
 
 HTMLhead();
 HTMLnavBar();
@@ -72,8 +72,27 @@ HTMLcategories();
     </aside>
 
     <section class="trailerSection">
-        <div class="videoCard">
-        <?php DisplayTrailerVideo($trailerId); ?>
+        <div class="sliderWrapper">
+
+            <button class="sliderArrow leftArrow" onclick="changeSlide(-1)"><</button>
+
+            <div class="sliderTrack">
+                <?php 
+                $trailerIds = [1, 2];
+                foreach ($trailerIds as $trailerId) { ?>
+                    <div class="slide">
+                        <?php DisplayTrailerVideo($trailerId); ?>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <button class="sliderArrow rightArrow" onclick="changeSlide(1)">></button>
+
+        </div>
+
+        <div class="sliderDots">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
         </div>
     </section>
 </main>

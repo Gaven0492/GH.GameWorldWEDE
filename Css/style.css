@@ -24,9 +24,13 @@
     
     /*== Accent Colors ==*/
     --colorBorder: #9e7b52;
-    --colorAccent: #725e47;
+    --colorAccent: #3a2c1b;
     --colorHeart: #ff3d3d;
     --colorHover: #46321e;   
+
+    /*font familys*/
+    --fontBig: "Pirata One";
+    --fontSmall: "Cormorant Garamond";
 }
 
 
@@ -53,7 +57,7 @@ body {
     width: 100%;
     background: var(--colorPrimary);
     backdrop-filter: blur(20px);
-    border-bottom: 4px solid var(--colorBorder);
+    border-bottom: 2px solid var(--colorBorder);
     padding: .5rem 5%;
     z-index: 1000;
 }
@@ -109,17 +113,17 @@ body {
     gap: .5rem;
     list-style: none;
     text-decoration: none;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: "Cormorant Garamond", serif;
 }
 
 .socialMenu ul li a {
     position: relative;
-    color: var(--colorBackground);
+    color: var(--colorText);
     background-color: var(--colorPrimary);
     text-decoration: none;
     font-size: 1.1rem;
     border-radius: 4px;
-    font-weight: 500;
+    font-weight: 700;
     padding: 0.5rem 1rem;
 }
 
@@ -167,6 +171,8 @@ nav{
     list-style: none;
     border-radius: 20px;
     overflow: hidden;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 700;
     background-color: var(--colorPrimary);
     border: 2px solid var(--colorBorder);
 }
@@ -233,17 +239,20 @@ nav{
     margin: 20px auto;
     max-width: 800px;
     min-height: fit-content;
-    color: var(--colorBackground);
+    color: var(--colorText);
 }
 
 .heroTitle {
+    font-family: "Pirata One", system-ui;
     font-size: 4rem;
+    font-weight: lighter;
     margin-bottom: 20px;
     text-shadow: 2px 2px 8px var(--colorAccent);
 }
 
 .heroSubtitle{
-    font-size: 1.2rem;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.1rem;
 }
 
 /*============================================================================*/
@@ -372,7 +381,7 @@ nav{
     padding: .7rem 1rem;
     color: var(--colorText);
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: .9rem;
     font-weight: 500;
@@ -501,6 +510,8 @@ nav{
     align-items: center;
     min-height: max-content;
     margin: 2rem auto;
+    font-family: "Cormorant Garamond", system-ui;
+    font-weight: lighter;
 }
 
 .formContainer{
@@ -616,7 +627,9 @@ form h1{
 
 .formButtons button{
     flex: 1;
-    font-size: 1.1rem;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 700;
+    font-size: 1.2rem;
     padding: 0.7rem 1.5rem;
     min-height: 40px;
     border-radius: 8px;
@@ -698,6 +711,8 @@ form h1{
     justify-content: center;
     margin: 2rem auto;
     width: 95%;
+    font-family: "Cormorant Garamond", system-ui;
+    font-weight: 800;
 }
 
 .cartTableWrapper{
@@ -725,6 +740,7 @@ form h1{
     font-weight: 600;
     letter-spacing: 1px;
     border-bottom: 2px solid var(--colorBorder);
+    text-transform: uppercase;
 }
 
 .cartTable tbody tr:hover {
@@ -770,9 +786,10 @@ form h1{
 }
 
 .cartButton {
+    font-family: var(--fontSmall), system-ui;
     height: auto;
     padding: .5rem 1rem;
-    font-size: .9rem;
+    font-size: 1rem;
     border-radius: 8px;
     border: 1px solid var(--colorBorder);
     color: var(--colorText);
@@ -816,7 +833,7 @@ form h1{
 /*=============================== About us CSS ==============================*/
 /*==========================================================================*/
 .aboutPage{
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 60px auto 3rem auto;
     padding: 0 30px;
     display: grid;
@@ -844,7 +861,7 @@ form h1{
     width: 190px;
     height: 250px;
     position: relative;
-    top: -110px;
+    top: -105px;
     border-radius: 8px;
     border: 2px solid var(--colorBorder);
 }
@@ -915,6 +932,83 @@ form h1{
     line-height: 1.8;
     color: #fff;
     text-decoration: none;
+}
+
+/*============================================================================*/
+/*=========================== About Trailer Slider ==========================*/
+/*==========================================================================*/
+.trailerSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.sliderWrapper{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 900px;
+}
+
+.sliderTrack{
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 12px;
+    border: 2px solid var(--colorBorder);
+}
+
+.slide{
+    min-width: 100%;
+    width: 1100px;
+    height: auto;
+    transition: transform 0.4s ease;
+}
+
+.slide iframe{
+    width: 100%;
+    height: 450px;
+    display: block;
+}
+
+.sliderArrow{
+    background: var(--colorPrimary);
+    background-color: var(--colorBackground);
+    border: 2px solid var(--colorBorder);
+    border-radius: 50%;
+    font-size: 2rem;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    transition: background .3s ease;
+    line-height: 1;
+}
+
+.sliderArrow:hover{
+    background: var(--colorAccent);
+    color: var(--colorText);
+}
+
+.sliderDots{
+    display: flex;
+    gap: .5rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--colorAccent);
+    border: 2px solid var(--colorBorder);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dot.active {
+    background: var(--colorBackground);
 }
 
 

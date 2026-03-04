@@ -16,6 +16,8 @@ function HTMLhead(){
         <meta name="author" content="Gaven Mikkers">
         <meta name="description" content="A store where you can buy games for different platforms">
 
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Pirata+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="icon" type="image/png" href="Img/Coat_of_Arms.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -347,10 +349,14 @@ function getCartTotal()
 
 
 
+/**
+ * function to fetch all trailers from trailer table
+ * @return array $trailers
+ */
 function GetAllTrailers()
 {
     $db = DbConnect();
-    $sql = "SELECT trailerId FROM trailer";
+    $sql = "SELECT * FROM trailer";
     $result = $db->query($sql);
     $trailers = $result->fetch_all(MYSQLI_ASSOC);
     $db->close();
@@ -359,56 +365,50 @@ function GetAllTrailers()
 
 
 /**
- * function to get video URL for artist
+ * function to fetch one trailer from trailer table by trailerId
  * @param int $trailerId
- * @return string|null $videoUrl
+ * @return array|null $trailer
  */
-function GetTrailerVideo($trailerId)
+function GetTrailerById($trailerId)
 {
-    $trailers = GetAllTrailers();
-
-    foreach ($trailers as $trailer) {
-        echo '<div class="videoCard">';
-        DisplayTrailerVideo($trailer["trailerId"]);
-        echo '</div>';
-    }
-    
-    if($trailer != null && !empty($trailer["trailerURL"]))
-    {
-        // Convert URL to embed URL
-        $embedUrl = ConvertToEmbedURL($trailer["trailerURL"]);
-        // Add parameters
-        $embedUrl = AddEmbedParameters($embedUrl);
-        
-        return $embedUrl;
-    }
-    
-    return null;
+    $db = DbConnect();
+    $statement = $db->prepare("SELECT * FROM trailer WHERE trailerId = ?");
+    $statement->bind_param("i", $trailerId);
+    $statement->execute();
+    $result = $statement->get_result();
+    $trailer = $result->fetch_assoc();
+    $statement->close();
+    $db->close();
+    return $trailer;
 }
 
 
 /**
- * function to display trailer video
+ * function to display trailer video by trailerId
  * @param int $trailerId
  * @return void
  */
 function DisplayTrailerVideo($trailerId)
 {
-    $trailer = GetAllTrailers($trailerId);
-    $embedUrl = GetTrailerVideo($trailerId);
-    
-    if($embedUrl != null)
-    {
-        ?>
-        <iframe class="video"
-                src="<?php echo $embedUrl; ?>"  
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin" 
-                allowfullscreen>
-        </iframe>
-        <?php
+    // get the trailer from the database
+    $trailer = GetTrailerById($trailerId);
+
+    // stop if no trailer found
+    if ($trailer == null || empty($trailer["trailerURL"])) {
+        return;
     }
+
+    // convert the YouTube URL to an embed URL
+    $embedUrl = ConvertToEmbedURL($trailer["trailerURL"]);
+    ?>
+    <iframe class="video"
+            src="<?php echo $embedUrl; ?>"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+    </iframe>
+    <?php
 }
 
 /**
@@ -427,29 +427,4 @@ function ConvertToEmbedURL($url)
     return $url;
 }
 
-/**
- * Add parameters to embed URL
- * @param string $embedUrl
- * @return string
- */
-function AddEmbedParameters($embedUrl)
-{
-    // parameters: mute
-    $parameters = ["mute" => 1]; // mute by default
-
-    // if the URL already has query parameters
-    if (strpos($embedUrl, "?") === false) {
-        $separator = "?";
-    } else {
-        $separator = "&";
-    }
-
-    // add parameter to the URL
-    foreach ($parameters as $key => $value) {
-        $embedUrl .= $separator . $key . "=" . $value;
-        $separator = "&"; 
-    }
-
-    return $embedUrl;
-}
 ?>

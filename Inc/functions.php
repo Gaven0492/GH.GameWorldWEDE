@@ -98,6 +98,10 @@ function HTMLfoot()
 }
 
 
+/*============================================================================*/
+/*=========================== Database Connections ===========================*/
+/*============================================================================*/
+
 /**
  * function to connect database
  * @return obj $conn
@@ -269,6 +273,12 @@ function DisplayGames($categoryId)
     }
 }
 
+
+
+/*============================================================================*/
+/*============================== Cart Functions ==============================*/
+/*============================================================================*/
+
 /**
  * function to add items to cart
  * 
@@ -305,7 +315,6 @@ function addToCart($gameId)
     
     return false;
 }
-
 
 
 /**
@@ -347,7 +356,84 @@ function getCartTotal()
     return $total;
 }
 
+/*============================================================================*/
+/*======================= Content Functions (About.php) ======================*/
+/*============================================================================*/
 
+/**
+ * Fetch all about content from the database
+ * @return array $content
+ */
+function GetAboutArticles()
+{
+    $db = DbConnect();
+    $sql = "SELECT * FROM about_content ORDER BY aboutId ASC";
+    $result = $db->query($sql);
+    $content = $result->fetch_all(MYSQLI_ASSOC);
+    $db->close();
+    return $content;
+}
+
+/**
+ * Display only rows where aboutType = "Section"
+ * @return void
+ */
+function DisplaySections()
+{
+    $allContent = GetAboutArticles();
+
+    foreach ($allContent as $item) {
+        if ($item["aboutType"] == "Section") {
+            ?>
+            <section>
+                <h2><?php echo htmlspecialchars($item["aboutName"]); ?></h2>
+                <p><?php echo nl2br(htmlspecialchars($item["aboutText"])); ?></p>
+            </section>
+            <?php
+        }
+    }
+}
+
+/**
+ * Display only rows where aboutType = "Article"
+ * @return void
+ */
+function DisplayArticles()
+{
+    $allContent = GetAboutArticles();
+
+    foreach ($allContent as $item) {
+        if ($item["aboutType"] == "Article") {
+            ?>
+            <article>
+                <h3><?php echo htmlspecialchars($item["aboutName"]); ?></h3>
+                <p><?php echo nl2br(htmlspecialchars($item["aboutText"])); ?></p>
+            </article>
+            <?php
+        }
+    }
+}
+
+function GetAboutContact(){
+    $db = DbConnect();
+    $sql = "SELECT * FROM about_contact";
+    $result = $db->query($sql);
+
+    $whoami = null;
+    $contact = null;
+    if ($result) {
+        $whoami = $result->fetch_assoc();
+        $contact = $result->fetch_assoc();
+    }
+    
+    $db->close();
+    return [$whoami, $contact];
+}
+
+
+/*============================================================================*/
+/*======================= Trailer Functions (About.php) ======================*/
+/*============================================================================*/
 
 /**
  * function to fetch all trailers from trailer table

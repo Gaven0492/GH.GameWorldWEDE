@@ -20,14 +20,14 @@ img.addEventListener("mouseenter", () => {
     img.src = "Img/KCD_1.jpg";
     img.style.width = "190px";
     img.style.height = "auto";
-    img.style.top = "-140px";
+    img.style.top = "-310px";
 });
 
 img.addEventListener("mouseleave", () => {
     img.src = "Img/KCD2_1.jpeg";
     img.style.width = "190px";
     img.style.height = "auto";
-    img.style.top = "-105px";
+    img.style.top = "-270px";
 });
 
 

@@ -113,7 +113,6 @@ body {
     gap: .5rem;
     list-style: none;
     text-decoration: none;
-    font-family: "Cormorant Garamond", serif;
 }
 
 .socialMenu ul li a {
@@ -121,9 +120,8 @@ body {
     color: var(--colorText);
     background-color: var(--colorPrimary);
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
     border-radius: 4px;
-    font-weight: 700;
     padding: 0.5rem 1rem;
 }
 
@@ -164,15 +162,13 @@ nav{
 }
 
 .navMenu {
-    width: 60%;
+    width: 70%;
     display: flex;
     align-items: center;
     justify-content: center;
     list-style: none;
     border-radius: 20px;
     overflow: hidden;
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 700;
     background-color: var(--colorPrimary);
     border: 2px solid var(--colorBorder);
 }
@@ -204,7 +200,7 @@ nav{
 .navMenu li a::after {
     content: "";
     position: absolute;
-    bottom: 5px;        
+    bottom: 3px;        
     left: 50%;
     width: 0;
     height: 2px;
@@ -236,23 +232,38 @@ nav{
 .heroSection {
     text-align: center;
     padding: 70px 20px;
-    margin: 20px auto;
+    margin: 2rem auto;
     max-width: 800px;
-    min-height: fit-content;
+    min-height: 64vh;
     color: var(--colorText);
 }
 
 .heroTitle {
-    font-family: "Pirata One", system-ui;
     font-size: 4rem;
-    font-weight: lighter;
     margin-bottom: 20px;
     text-shadow: 2px 2px 8px var(--colorAccent);
 }
 
 .heroSubtitle{
-    font-family: "Cormorant Garamond", serif;
     font-size: 1.1rem;
+}
+
+#featuredGames{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#featuredGames h2{
+    margin-bottom: 2rem;
+}
+
+#featuredGames .featuredSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
 }
 
 /*============================================================================*/
@@ -510,8 +521,6 @@ nav{
     align-items: center;
     min-height: max-content;
     margin: 2rem auto;
-    font-family: "Cormorant Garamond", system-ui;
-    font-weight: lighter;
 }
 
 .formContainer{
@@ -627,9 +636,7 @@ form h1{
 
 .formButtons button{
     flex: 1;
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1rem;
     padding: 0.7rem 1.5rem;
     min-height: 40px;
     border-radius: 8px;
@@ -662,9 +669,7 @@ form h1{
 #submitButton {
     --c1: var(--colorPrimary);
     --c2: var(--colorBackground);
-
     --angle: 90deg;
-
     --start: 0%;
     --end: 100%;
 }
@@ -672,9 +677,7 @@ form h1{
 #resetButton {
     --c1: var(--colorPrimary);
     --c2: var(--colorBackground);
-
     --angle: 90deg;
-
     --start: 100%;
     --end: 0%;
 }
@@ -711,8 +714,6 @@ form h1{
     justify-content: center;
     margin: 2rem auto;
     width: 95%;
-    font-family: "Cormorant Garamond", system-ui;
-    font-weight: 800;
 }
 
 .cartTableWrapper{
@@ -737,10 +738,8 @@ form h1{
 .cartTable thead tr th{
     padding: 1rem;
     text-align: left;
-    font-weight: 600;
     letter-spacing: 1px;
     border-bottom: 2px solid var(--colorBorder);
-    text-transform: uppercase;
 }
 
 .cartTable tbody tr:hover {
@@ -786,10 +785,9 @@ form h1{
 }
 
 .cartButton {
-    font-family: var(--fontSmall), system-ui;
     height: auto;
     padding: .5rem 1rem;
-    font-size: 1rem;
+    font-size: .9rem;
     border-radius: 8px;
     border: 1px solid var(--colorBorder);
     color: var(--colorText);
@@ -869,14 +867,16 @@ form h1{
 
 
 .aboutPage section h2{
-    color: var(--colorBackground);
+    color: var(--colorText);
+    text-shadow: 8px 8px 12px var(--colorAccent);
     margin-bottom: 1rem;
-    border-left: 5px solid var(--colorBorder);
+    border-left: 5px solid var(--colorBackground);
     padding-left: 1rem;
 }
 
 .aboutPage section p{
     color: var(--colorBackground);
+    text-shadow: 2px 2px 10px var(--colorAccent);
     margin: 1.2rem;
 }
 

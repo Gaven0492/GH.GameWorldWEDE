@@ -16,8 +16,6 @@ function HTMLhead(){
         <meta name="author" content="Gaven Mikkers">
         <meta name="description" content="A store where you can buy games for different platforms">
 
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Pirata+One&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="icon" type="image/png" href="Img/Coat_of_Arms.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +34,8 @@ function HTMLhead(){
  */
 function HTMLnavBar()
 {
+$navigation = GetNavigation(); 
+
 ?>
 <body>
     <header class="header">
@@ -48,10 +48,14 @@ function HTMLnavBar()
             </div>
             <nav class="socialMenu">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="contact.php"><i class="fa-solid fa-user"></i> Contact</a></li>
-                    <li><a href="about.php">About us</a></li>
-                    <li><a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                    <?php foreach ($navigation as $navItem): ?>
+                        <li>
+                            <a href="<?php echo htmlspecialchars($navItem["navLink"]); ?>">
+                                <i class="<?php echo htmlspecialchars($navItem["navIcon"]); ?>"></i>
+                                <?php echo htmlspecialchars($navItem["navName"]); ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </nav>
         </div>
@@ -67,7 +71,6 @@ function HTMLcategories()
 {
     $categories = GetCategories();
 ?>
-
     <nav>
         <ul class="navMenu" id="navMenu">
             <?php foreach ($categories as $category): ?>
@@ -123,6 +126,27 @@ function DbConnect(){
 
 
 /**
+ * function to get navigation from database
+ * @return array $navigation
+ */
+function GetNavigation()
+{
+    // connect to database
+    $db = DbConnect();
+    // define sql statements
+    $sql = "SELECT * FROM `navigation` ";
+    // run query on database 
+    $resource = $db->query($sql) or die($db->error);
+    // fetch data as associated array
+    $navigation = $resource->fetch_all(MYSQLI_ASSOC);
+    // close connection
+    $db->close();
+    // return array navigation
+    return $navigation;
+}
+
+
+/**
  * function to fetch all categorys from category table
  * @return array $category
  */
@@ -172,12 +196,14 @@ function GetCategoryById($categoryId)
 function GetCategoryColor($categoryId)
 {
     $colors = [
-        1 => "#e61e1e",  // PC 
-        2 => "#0066cc",  // PlayStation 
-        3 => "#3ab814",  // Xbox 
-        4 => "#be3f3f",  // PC 
-        5 => "#3a84ce",  // PlayStation 
-        6 => "#8ce072",  // Xbox 
+        1 => "#9836b6",  // PC 
+        2 => "#0042ad",  // PlayStation 
+        3 => "#139713",  // Xbox 
+        4 => "#E60012",  // Nintendo 
+        5 => "#9a69d2",  // PC 
+        6 => "#3a84ce",  // Playstation 
+        7 => "#8ce072",  // Xbox 
+        8 => "#d94b4b",  // Nintendo
     ];
     
     // if category exists, return color,  default purple
@@ -234,8 +260,8 @@ function GetGameById($gameId)
 function DisplayGames($categoryId)
 {
     $category = GetCategoryById($categoryId); 
-    $games    = GetGameByCategory($categoryId);
-    $colors    = GetCategoryColor($categoryId + 3);
+    $games = GetGameByCategory($categoryId);
+    $colors = GetCategoryColor($categoryId + 4);
 
     foreach ($games as $game) {
         ?>
@@ -273,7 +299,65 @@ function DisplayGames($categoryId)
     }
 }
 
+function DisplayPopularGames() {
+    $categories = GetCategories();
+    shuffle($categories); // randomize categories
+    $categories = array_slice($categories, 0, 4); // take 4 categories
 
+    foreach ($categories as $category) {
+        $categoryId = $category['categoryId'];
+        $games = GetGameByCategory($categoryId);
+        if (empty($games)) {
+            continue; // if category has no games
+        }
+
+        shuffle($games);
+        $game = $games[0]; // pick 1 game
+        $colors = GetCategoryColor($categoryId + 4);
+        ?>
+
+        <article class="card">
+            <div class="cardImage" style="background-color: <?php echo $colors; ?>;">              
+                <div class="categoryLogo">
+                    <img src="Img/<?php echo htmlspecialchars($category["categoryImg"]); ?>" 
+                        alt="<?php echo htmlspecialchars($category["categoryName"]); ?>">
+                </div>
+
+                <button class="wishlistButton" onclick="toggleWishlist(this)">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+
+                <img src="Img/<?php echo htmlspecialchars($game["gameImg"]); ?>" 
+                    alt="<?php echo htmlspecialchars($game["gameName"]); ?>">
+
+                <div class="cardPrice">
+                    € <?php echo number_format($game["gamePrice"], 2); ?>
+                </div>
+            </div>
+            
+            <div class="cardContent">
+                <h3 class="cardTitle"><?php echo htmlspecialchars($game["gameName"]); ?></h3>
+                <div class="cardButtons">
+                    <form method="POST" action="cart.php">
+                        <input type="hidden" name="add" value="<?php echo $game['gameId']; ?>">
+                        <button type="submit" class="cardButton addToCartButton submitButton">
+                            <span>
+                                <i class="fa fa-plus"></i>
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </span>
+                        </button>
+                    </form>
+
+                    <button class="cardButton buyNowButton resetButton">
+                        <span>Buy Now</span>
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <?php
+    }
+}
 
 /*============================================================================*/
 /*============================== Cart Functions ==============================*/
@@ -387,7 +471,7 @@ function DisplaySections()
             ?>
             <section>
                 <h2><?php echo htmlspecialchars($item["aboutName"]); ?></h2>
-                <p><?php echo nl2br(htmlspecialchars($item["aboutText"])); ?></p>
+                <p><?php echo htmlspecialchars($item["aboutText"]); ?></p>
             </section>
             <?php
         }
@@ -407,7 +491,7 @@ function DisplayArticles()
             ?>
             <article>
                 <h3><?php echo htmlspecialchars($item["aboutName"]); ?></h3>
-                <p><?php echo nl2br(htmlspecialchars($item["aboutText"])); ?></p>
+                <p><?php echo htmlspecialchars($item["aboutText"]); ?></p>
             </article>
             <?php
         }
@@ -418,7 +502,6 @@ function GetAboutContact(){
     $db = DbConnect();
     $sql = "SELECT * FROM about_contact";
     $result = $db->query($sql);
-
     $whoami = null;
     $contact = null;
     if ($result) {

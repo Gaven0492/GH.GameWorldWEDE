@@ -19,7 +19,6 @@ HTMLcategories();
     <div>
         <div class="aboutContentAlign">
             <?php DisplaySections(); ?>
-
             <div class="aboutImageContainer">
                 <div class="aboutImageOverlay">
                     <a href="https://www.deepsilver.com/games/kingdom-come-deliverance-ii" target="_blank" class="aboutImageLink">
@@ -54,9 +53,7 @@ HTMLcategories();
 
     <section class="trailerSection">
         <div class="sliderWrapper">
-
             <button class="sliderArrow leftArrow" onclick="changeSlide(-1)"><</button>
-
             <div class="sliderTrack">
                 <?php 
                 $trailerIds = [1, 2];
@@ -66,9 +63,7 @@ HTMLcategories();
                     </div>
                 <?php } ?>
             </div>
-
             <button class="sliderArrow rightArrow" onclick="changeSlide(1)">></button>
-
         </div>
 
         <div class="sliderDots">

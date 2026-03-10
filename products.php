@@ -8,25 +8,18 @@ HTMLhead();
 HTMLnavBar();
 HTMLcategories();
 
-$categoryId = $_GET['categoryId'];
+$categoryId = $_GET["categoryId"] ?? null;
 
-if (isset($_GET["id"])){
-    $gameId = $_GET["id"];
-
-    if (addToCart($gameId)){
-        $_SESSION["succesMessage"] = "Product added to cart succesfully";
-    }else{
-        $_SESSION["errorMessage"] = "Product not found";
-    }
-}else{
-    $_SESSION["errorMessage"] = "Invalid product ID";
+if (isset($_GET["gameId"])) {
+    $gameId = intval($_GET["gameId"]);
+    DisplaySingleProduct($_GET["gameId"]);
 }
-?>
-
+else{
+    ?>
     <section class="cardSection">
         <?php DisplayGames($categoryId); ?>
     </section>
+    <?php
+}
 
-<?php
 HTMLfoot();
-?>

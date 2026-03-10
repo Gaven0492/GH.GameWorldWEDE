@@ -16,19 +16,21 @@ function toggleWishlist(button) {
 const img = document.getElementById("aboutImg");
 
 // hover
-img.addEventListener("mouseenter", () => {
-    img.src = "Img/KCD_1.jpg";
-    img.style.width = "190px";
-    img.style.height = "auto";
-    img.style.top = "-310px";
-});
+if (img) {
+    img.addEventListener("mouseenter", () => {
+        img.src = "Img/KCD_1.jpg";
+        img.style.width = "190px";
+        img.style.height = "auto";
+        img.style.top = "-310px";
+    });
 
-img.addEventListener("mouseleave", () => {
-    img.src = "Img/KCD2_1.jpeg";
-    img.style.width = "190px";
-    img.style.height = "auto";
-    img.style.top = "-270px";
-});
+    img.addEventListener("mouseleave", () => {
+        img.src = "Img/KCD2_1.jpeg";
+        img.style.width = "190px";
+        img.style.height = "auto";
+        img.style.top = "-270px";
+    });
+}
 
 
 /**
@@ -64,3 +66,4 @@ function changeSlide(direction) {
 
     goToSlide(nextSlide);
 }
+

@@ -210,7 +210,7 @@ function GetCategoryColor($categoryId)
     if (isset($colors[$categoryId])) {
         return $colors[$categoryId];
     } else {
-        return "#4a4363";  // default purple
+        return "#9836b6";  // default purple
     }
 }
 
@@ -259,7 +259,7 @@ function GetGameById($gameId)
  */
 function DisplayGames($categoryId)
 {
-    $category = GetCategoryById($categoryId); 
+    $category = GetCategoryById($categoryId);
     $games = GetGameByCategory($categoryId);
     $colors = GetCategoryColor($categoryId + 4);
 
@@ -281,7 +281,7 @@ function DisplayGames($categoryId)
                 <h3 class="cardTitle"><?php echo htmlspecialchars($game["gameName"]); ?></h3>
                 <div class="cardButtons">
                     <form method="POST" action="cart.php">
-                        <input type="hidden" name="add" value="<?php echo $game['gameId']; ?>">
+                        <input type="hidden" name="add" value="<?php echo $game["gameId"]; ?>">
                         <button type="submit" class="cardButton addToCartButton submitButton">
                             <span>
                                 <i class="fa fa-plus"></i>
@@ -289,9 +289,10 @@ function DisplayGames($categoryId)
                             </span>
                         </button>
                     </form>
-                    <button class="cardButton buyNowButton resetButton">
+                    <a href="products.php?categoryId=<?php echo $game["categoryId"]; ?>&gameId=<?php echo $game["gameId"]; ?>"
+                    class="cardButton buyNowButton resetButton">
                         <span>Buy Now</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </article>
@@ -299,13 +300,17 @@ function DisplayGames($categoryId)
     }
 }
 
+
+/**
+ * Function to display popular games
+ */
 function DisplayPopularGames() {
     $categories = GetCategories();
     shuffle($categories); // randomize categories
     $categories = array_slice($categories, 0, 4); // take 4 categories
 
     foreach ($categories as $category) {
-        $categoryId = $category['categoryId'];
+        $categoryId = $category["categoryId"];
         $games = GetGameByCategory($categoryId);
         if (empty($games)) {
             continue; // if category has no games
@@ -339,7 +344,7 @@ function DisplayPopularGames() {
                 <h3 class="cardTitle"><?php echo htmlspecialchars($game["gameName"]); ?></h3>
                 <div class="cardButtons">
                     <form method="POST" action="cart.php">
-                        <input type="hidden" name="add" value="<?php echo $game['gameId']; ?>">
+                        <input type="hidden" name="add" value="<?php echo $game["gameId"]; ?>">
                         <button type="submit" class="cardButton addToCartButton submitButton">
                             <span>
                                 <i class="fa fa-plus"></i>
@@ -354,10 +359,210 @@ function DisplayPopularGames() {
                 </div>
             </div>
         </article>
-
         <?php
     }
 }
+
+
+/**
+ * Display a single game as a full product detail page
+ * @param int $gameId
+ * @return void
+ */
+function DisplaySingleProduct($gameId)
+{
+    $game       = GetGameById($gameId);
+    $mediaItems = GetGameImages($gameId); // now returns images + trailers combined
+
+    // fallback if nothing found
+    if (empty($mediaItems)) {
+        $mediaItems[] = [
+            "type" => "image",
+            "src"  => "Img/" . $game["gameImg"]
+        ];
+    }
+
+    $mediaJson = json_encode($mediaItems);
+?>
+<main>
+    <section class="productPage">
+
+        <!-- left side -->
+        <div class="productGallery">
+
+            <!-- main display area -->
+            <div class="mainImageContainer">
+                <button class="galleryButton galleryPrev" onclick="PrevMedia()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <!-- main image area -->
+                <img id="mainProductImage"
+                    class="mainProductImage"
+                    src="<?php echo htmlspecialchars($mediaItems[0]["src"]); ?>">
+
+                <!-- trailer area, hidden by default -->
+                <iframe id="mainProductTrailer"
+                    class="mainProductImage"
+                    allowfullscreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                </iframe>
+
+                <button class="galleryButton galleryNext" onclick="NextMedia()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- thumbnail row -->
+            <div class="thumbnailRow">
+                <?php foreach ($mediaItems as $index => $item): ?>
+                    <?php if ($item["type"] === "image"): ?>
+                        <img class="thumbnail <?php echo $index === 0 ? "activeThumbnail" : ""; ?>"
+                            src="<?php echo htmlspecialchars($item["src"]); ?>"
+                            onclick="SetMedia(<?php echo $index; ?>)">
+                    <?php else: ?>
+                        <!-- trailer thumbnail: show a play icon -->
+                        <div class="thumbnail trailerThumbnail <?php echo $index === 0 ? "activeThumbnail" : ""; ?>"
+                            onclick="SetMedia(<?php echo $index; ?>)">
+                            <i class="fa-solid fa-circle-play"></i>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+
+    <!-- right side -->
+        <div class="productDetails">
+            <h1 class="productTitle">
+            <?php echo htmlspecialchars($game["gameName"]); ?>
+            </h1>
+            <p class="productDescription">
+            <?php
+            if (!empty($game["gameDescription"])) {
+                echo htmlspecialchars($game["gameDescription"]);
+            } else {
+                echo "No description available.";
+            }
+            ?>
+            </p>
+
+            <div class="priceBox">
+                <span class="price">
+                    € <?php echo number_format($game["gamePrice"],2); ?>
+                </span>
+            </div>
+
+            <div class="productButtons">
+                <form method="POST" action="cart.php">
+                    <input type="hidden" name="add" value="<?php echo $game["gameId"]; ?>">
+                    <button type="submit" class="cartButton">
+                        <i class="fa-solid fa-cart-shopping"></i> add to cart
+                    </button>
+                </form>
+                <a href="products.php?categoryId=<?php echo $game["categoryId"]; ?>"
+                    class="goBackButton">
+                ← Go Back
+                </a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    var MediaItems = <?php echo $mediaJson; ?>;
+    var CurrentIndex = 0;
+
+    function SetMedia(index) {
+        var imgEl      = document.getElementById("mainProductImage");
+        var iframeEl   = document.getElementById("mainProductTrailer");
+        var thumbnails = document.querySelectorAll(".thumbnail, .trailerThumbnail");
+
+        thumbnails.forEach(function(thumb, i) {
+            thumb.classList.toggle("activeThumbnail", i === index);
+        });
+
+        var item = MediaItems[index];
+        CurrentIndex = index;
+
+        if (item.type === "image") {
+            imgEl.src = item.src;
+            imgEl.style.display = "block";
+            iframeEl.style.display = "none";
+            iframeEl.src = "";
+        } else {
+            iframeEl.src = item.src;
+            iframeEl.style.display = "block";
+            imgEl.style.display = "none";
+        }
+    }
+
+    function PrevMedia() {
+        SetMedia((CurrentIndex - 1 + MediaItems.length) % MediaItems.length);
+    }
+
+    function NextMedia() {
+        SetMedia((CurrentIndex + 1) % MediaItems.length);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        SetMedia(0);
+    });
+</script>
+<?php
+}
+
+
+/**
+ * - Function to get all images for a game
+ * @param int $gameId
+ * @return array $images
+ */
+function GetGameImages($gameId)
+{
+    $db = DbConnect();
+    $gameId = intval($gameId);
+
+    $items = [];
+
+    // get base game image from game table
+    $sqlGame = "SELECT gameImg FROM game WHERE gameId = $gameId";
+    $resultGame = $db->query($sqlGame);
+    if ($resultGame && $rowGame = $resultGame->fetch_assoc()) {
+        $items[] = [
+            "type" => "image",
+            "src"  => "Img/" . $rowGame["gameImg"]
+        ];
+    }
+
+    // get extra images / trailers
+    $sql = "SELECT imageTrailer FROM game_images WHERE gameId = $gameId";
+    $result = $db->query($sql);
+
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+
+            // image
+            if (!empty($row["imageImg"])) {
+                $items[] = [
+                    "type" => "image",
+                    "src"  => "Img/" . $row["imageImg"]
+                ];
+            }
+
+            // trailer
+            if (!empty($row["imageTrailer"])) {
+                $items[] = [
+                    "type" => "trailer",
+                    "src"  => ConvertToEmbedURL($row["imageTrailer"])
+                ];
+            }
+        }
+    }
+    $db->close();
+    return $items;
+}
+
 
 /*============================================================================*/
 /*============================== Cart Functions ==============================*/
@@ -393,10 +598,8 @@ function addToCart($gameId)
                 "quantity" => 1
             ];
         }
-
         return true;
     }
-    
     return false;
 }
 

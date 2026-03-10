@@ -78,7 +78,7 @@ if (!empty($_SESSION['cart'])): ?>
                     </td>
                     <td>€ <?= number_format($item["price"], 2); ?></td>
                     <td>
-                        <form action="cart.php" method="post" class="quantityForm">
+                        <form action="cart.php" method="POST" class="quantityForm">
                             <input type="hidden" name="id" value="<?= $id ?>">
                             <input type="number" name="quantity" value="<?= $item["quantity"] ?>" min="1" class="quantityInput" onchange="this.form.submit()">
                         </form>

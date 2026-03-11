@@ -42,8 +42,7 @@ $navigation = GetNavigation();
         <div class="headerContainer">
             <div class="headerLogo">
                 <a href="index.php" class="gameWorldLogo">
-                    <img src="Img/Coat_of_Arms.png" alt="GameWorld Logo" class="LogoImageV1">
-                    <img src="Img/GameWorldLogoV2.png" alt="GameWorld Logo" class="LogoImageV2">
+
                 </a>
             </div>
             <nav class="socialMenu">
@@ -270,9 +269,6 @@ function DisplayGames($categoryId)
                 <div class="categoryLogo">
                     <img src="Img/<?php echo htmlspecialchars($category["categoryImg"]); ?>" alt="<?php echo htmlspecialchars($category["categoryName"]); ?>">
                 </div>
-                <button class="wishlistButton" onclick="toggleWishlist(this)">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
                 <img src="Img/<?php echo htmlspecialchars($game["gameImg"]); ?>" alt="<?php echo htmlspecialchars($game["gameName"]); ?>">
                 <div class="cardPrice">€ <?php echo number_format($game["gamePrice"], 2); ?></div>
             </div>
@@ -328,10 +324,6 @@ function DisplayPopularGames() {
                         alt="<?php echo htmlspecialchars($category["categoryName"]); ?>">
                 </div>
 
-                <button class="wishlistButton" onclick="toggleWishlist(this)">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
-
                 <img src="Img/<?php echo htmlspecialchars($game["gameImg"]); ?>" 
                     alt="<?php echo htmlspecialchars($game["gameName"]); ?>">
 
@@ -353,9 +345,10 @@ function DisplayPopularGames() {
                         </button>
                     </form>
 
-                    <button class="cardButton buyNowButton resetButton">
+                    <a href="products.php?categoryId=<?php echo $game["categoryId"]; ?>&gameId=<?php echo $game["gameId"]; ?>"
+                    class="cardButton buyNowButton resetButton">
                         <span>Buy Now</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </article>
@@ -371,7 +364,7 @@ function DisplayPopularGames() {
  */
 function DisplaySingleProduct($gameId)
 {
-    $game       = GetGameById($gameId);
+    $game = GetGameById($gameId);
     $mediaItems = GetGameImages($gameId); // now returns images + trailers combined
 
     // fallback if nothing found
@@ -434,80 +427,41 @@ function DisplaySingleProduct($gameId)
 
     <!-- right side -->
         <div class="productDetails">
-            <h1 class="productTitle">
-            <?php echo htmlspecialchars($game["gameName"]); ?>
+            <h1 class="productTitle"> 
+                <?php echo htmlspecialchars($game["gameName"]); ?> 
             </h1>
-            <p class="productDescription">
-            <?php
-            if (!empty($game["gameDescription"])) {
-                echo htmlspecialchars($game["gameDescription"]);
-            } else {
-                echo "No description available.";
-            }
-            ?>
-            </p>
 
             <div class="priceBox">
-                <span class="price">
-                    € <?php echo number_format($game["gamePrice"],2); ?>
-                </span>
+                <span class="price">€ <?php echo number_format($game["gamePrice"],2); ?></span>
             </div>
 
+            <p class="productDescription"> 
+                <?php echo htmlspecialchars($game["gameDescription"]); ?> 
+            </p>
+
             <div class="productButtons">
+                <a href="products.php?categoryId=<?php echo $game['categoryId']; ?>" 
+                    id="goBackButton" 
+                    class="productButton">
+                    <span class="goBackIcon">←</span> Go Back
+                </a>
+
                 <form method="POST" action="cart.php">
                     <input type="hidden" name="add" value="<?php echo $game["gameId"]; ?>">
-                    <button type="submit" class="cartButton">
-                        <i class="fa-solid fa-cart-shopping"></i> add to cart
+                    <button type="submit" id="productAddToCart" class="productButton">
+                        Add To Cart <span> <i class="fa-solid fa-cart-shopping"></i></span>
                     </button>
                 </form>
-                <a href="products.php?categoryId=<?php echo $game["categoryId"]; ?>"
-                    class="goBackButton">
-                ← Go Back
-                </a>
             </div>
         </div>
     </section>
 </main>
 
-<script>
-    var MediaItems = <?php echo $mediaJson; ?>;
-    var CurrentIndex = 0;
-
-    function SetMedia(index) {
-        var imgEl      = document.getElementById("mainProductImage");
-        var iframeEl   = document.getElementById("mainProductTrailer");
-        var thumbnails = document.querySelectorAll(".thumbnail, .trailerThumbnail");
-
-        thumbnails.forEach(function(thumb, i) {
-            thumb.classList.toggle("activeThumbnail", i === index);
-        });
-
-        var item = MediaItems[index];
-        CurrentIndex = index;
-
-        if (item.type === "image") {
-            imgEl.src = item.src;
-            imgEl.style.display = "block";
-            iframeEl.style.display = "none";
-            iframeEl.src = "";
-        } else {
-            iframeEl.src = item.src;
-            iframeEl.style.display = "block";
-            imgEl.style.display = "none";
-        }
-    }
-
-    function PrevMedia() {
-        SetMedia((CurrentIndex - 1 + MediaItems.length) % MediaItems.length);
-    }
-
-    function NextMedia() {
-        SetMedia((CurrentIndex + 1) % MediaItems.length);
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        SetMedia(0);
-    });
+<script> 
+    var MediaItems = <?php echo $mediaJson; ?>; 
+</script>
+<script 
+    src="js/productGallery.js">
 </script>
 <?php
 }
@@ -535,26 +489,26 @@ function GetGameImages($gameId)
         ];
     }
 
-    // get extra images / trailers
-    $sql = "SELECT imageTrailer FROM game_images WHERE gameId = $gameId";
+    // get trailers
+    $sql = "SELECT gameTrailer FROM game WHERE gameId = $gameId";
     $result = $db->query($sql);
 
     if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
 
             // image
-            if (!empty($row["imageImg"])) {
+            if (!empty($row["gameImg"])) {
                 $items[] = [
                     "type" => "image",
-                    "src"  => "Img/" . $row["imageImg"]
+                    "src"  => "Img/" . $row["gameImg"]
                 ];
             }
 
             // trailer
-            if (!empty($row["imageTrailer"])) {
+            if (!empty($row["gameTrailer"])) {
                 $items[] = [
                     "type" => "trailer",
-                    "src"  => ConvertToEmbedURL($row["imageTrailer"])
+                    "src"  => ConvertToEmbedURL($row["gameTrailer"])
                 ];
             }
         }

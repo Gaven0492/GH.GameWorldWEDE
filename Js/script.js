@@ -2,15 +2,6 @@
 /*============================================================================*/
 
 /**
- * Function to toggle wishlist heart icon
- * @param {HTMLElement} button - The wishlist button that was clicked
- */
-function toggleWishlist(button) {
-    button.classList.toggle("active");
-}
-
-
-/**
  * function to change img src uppon hover (aboutUs.php)
  */
 const img = document.getElementById("aboutImg");
@@ -67,3 +58,51 @@ function changeSlide(direction) {
     goToSlide(nextSlide);
 }
 
+
+/**
+ * function for the slide (product.php)
+ */
+var CurrentIndex = 0;
+
+function SetMedia(index) {
+    var imgEl = document.getElementById("mainProductImage");
+    var iframeEl = document.getElementById("mainProductTrailer");
+    var thumbnails = document.querySelectorAll(".thumbnail, .trailerThumbnail");
+
+    thumbnails.forEach(function (thumb, i) {
+        thumb.classList.toggle("activeThumbnail", i === index);
+    });
+
+    var item = MediaItems[index];
+    CurrentIndex = index;
+
+    if (item.type === "image") {
+
+        imgEl.src = item.src;
+        imgEl.style.display = "block";
+
+        iframeEl.style.display = "none";
+        iframeEl.src = "";
+
+    } else {
+
+        iframeEl.src = item.src;
+        iframeEl.style.display = "block";
+
+        imgEl.style.display = "none";
+    }
+}
+
+function PrevMedia() {
+    SetMedia((CurrentIndex - 1 + MediaItems.length) % MediaItems.length);
+}
+
+function NextMedia() {
+    SetMedia((CurrentIndex + 1) % MediaItems.length);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (MediaItems.length > 0) {
+        SetMedia(0);
+    }
+});

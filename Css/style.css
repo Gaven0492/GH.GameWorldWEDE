@@ -34,7 +34,6 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     background: var(--colorBackground);
     color: var(--colorText);
-    overflow-x: hidden;
 
     background: linear-gradient(rgba(0, 0, 0, 0.5)), url("../Img/GameWorldBackground.png");
     background-size: cover;
@@ -392,6 +391,7 @@ nav{
     cursor: pointer;
     font-size: .9rem;
     font-weight: 500;
+    text-align: center;
 }
 
 .cardButton {
@@ -411,12 +411,13 @@ nav{
 /*============================================================================*/
 /*========================== Single product styling =========================*/
 .productPage{
-    max-width: 1300px;
+    max-width: 1400px;
     margin: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 500px;
     gap: 20px;
     padding: 40px;
+    align-items: start;
 }
 
 .productPage .productGallery{
@@ -439,8 +440,8 @@ nav{
 }
 
 #mainProductTrailer {
-    width: 700px;
-    height: 400px; 
+    width: 670px; 
+    aspect-ratio: 16 / 9;
     border: 2px solid var(--colorBorder);
     border-radius: 12px;
     display: block;
@@ -454,8 +455,8 @@ nav{
     background-color: var(--colorBackground);
     border: 2px solid var(--colorAccent);
     border-radius: 50%;
-    font-size: 2rem;
-    padding: .5rem 1rem;
+    font-size: 1.5rem;
+    padding: .6rem .9rem;
     cursor: pointer;
     transition: background .3s ease;
     line-height: 1;
@@ -466,6 +467,7 @@ nav{
     border: 2px solid var(--colorBorder);
     color: var(--colorText);
 }
+
 
 /* row of images */
 .thumbnailRow{
@@ -504,18 +506,112 @@ nav{
     outline: 3px solid var(--colorBorder); 
 }
 
+
+/* right side */
+.productDetails{
+    padding: 35px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--colorBorder);
+}
+
+.productTitle{
+    margin-bottom: 12px;
+}
+
+.price{
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.priceBox{
+    margin: 20px 0;
+}
+
+.productDescription{
+    margin: 1rem;
+}
+
+.productButtons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0 auto;
+}
+
+.productButtons .productButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 2rem auto 0 auto;
+    width: 200px;
+    border: 2px solid var(--colorBackground);
+    padding: 12px 18px;
+    border-radius: 8px;
+    background-color: var(--colorPrimary);
+    color: var(--colorText);
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.goBackIcon {
+    display: inline-block;
+}
+
+
+#goBackButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0,0,0,0);
+    transition: 0.1s;
+}
+
+#goBackButton .goBackIcon {
+    display: inline-block;
+    transform: translateZ(0);
+    transition: transform 0.1s ease-out;
+}
+
+#goBackButton:hover .goBackIcon,
+#goBackButton:focus .goBackIcon,
+#goBackButton:active .goBackIcon {
+    transform: translateX(-4px);
+}
+
+
+#productAddToCart {
+    display: inline-block;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition-duration: 0.3s;
+}
+#productAddToCart .hvr-icon {
+    transform: translateZ(0);
+    transition-duration: 0.3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+}
+#productAddToCart:hover .fa-cart-shopping, 
+#productAddToCart:focus .fa-cart-shopping, 
+#productAddToCart:active .fa-cart-shopping {
+    transform: scale(1.3) translateZ(0);
+}
+
 /*============================================================================*/
 /*=============================  Sweep to right =============================*/
 .addToCartButton {
     display: inline-block;
     vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     box-shadow: Var(--shadow);
     position: relative;
-    -webkit-transition-property: color;
     transition-property: color;
-    -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
 }
 
@@ -529,15 +625,10 @@ nav{
     bottom: 0;
     background: var(--colorBackground);
     border-radius: 8px;
-    -webkit-transform: scaleX(0);
     transform: scaleX(0);
-    -webkit-transform-origin: 0 50%;
     transform-origin: 0 50%;
-    -webkit-transition-property: transform;
     transition-property: transform;
-    -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
-    -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
 }
 
@@ -550,7 +641,6 @@ nav{
 .addToCartButton:hover:before, 
 .addToCartButton:focus:before, 
 .addToCartButton:active:before {
-    -webkit-transform: scaleX(1);
     transform: scaleX(1);
 }
 
@@ -560,13 +650,10 @@ nav{
 .buyNowButton{
     display: inline-block;
     vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     box-shadow: Var(--shadow);
     position: relative;
-    -webkit-transition-property: color;
     transition-property: color;
-    -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
 }
 
@@ -580,15 +667,10 @@ nav{
     bottom: 0;
     background: var(--colorBackground);
     border-radius: 8px;
-    -webkit-transform: scaleX(0);
     transform: scaleX(0);
-    -webkit-transform-origin: 100% 50%;
     transform-origin: 100% 50%;
-    -webkit-transition-property: transform;
     transition-property: transform;
-    -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
-    -webkit-transition-timing-function: ease-out;
     transition-timing-function: ease-out;
 }
 
@@ -1079,8 +1161,8 @@ form h1{
     background-color: var(--colorBackground);
     border: 2px solid var(--colorBorder);
     border-radius: 50%;
-    font-size: 2rem;
-    padding: .5rem 1rem;
+    font-size: 1.5rem;
+    padding: .6rem .9rem;
     cursor: pointer;
     transition: background .3s ease;
     line-height: 1;

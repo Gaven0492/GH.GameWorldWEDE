@@ -53,7 +53,10 @@ HTMLcategories();
 
     <section class="trailerSection">
         <div class="sliderWrapper">
-            <button class="sliderArrow leftArrow" onclick="changeSlide(-1)"><</button>
+            <button class="sliderArrow leftArrow" onclick="changeSlide(-1)">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
             <div class="sliderTrack">
                 <?php 
                 $trailerIds = [1, 2];
@@ -63,7 +66,9 @@ HTMLcategories();
                     </div>
                 <?php } ?>
             </div>
-            <button class="sliderArrow rightArrow" onclick="changeSlide(1)">></button>
+            <button class="sliderArrow rightArrow" onclick="changeSlide(1)">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
         </div>
 
         <div class="sliderDots">

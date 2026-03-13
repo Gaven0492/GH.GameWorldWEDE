@@ -17,7 +17,7 @@ function HTMLhead(){
         <meta name="description" content="A store where you can buy games for different platforms">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="icon" type="image/png" href="Img/Coat_of_Arms.png">
+        <link rel="icon" type="image/png" href="Img/GameWorldLogoImage.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title>GameWorld</title>
@@ -42,7 +42,7 @@ $navigation = GetNavigation();
         <div class="headerContainer">
             <div class="headerLogo">
                 <a href="index.php" class="gameWorldLogo">
-
+                    <img src="Img/GameWorldLogo.gif" alt="GameWorld Logo" class="logoImage">
                 </a>
             </div>
             <nav class="socialMenu">

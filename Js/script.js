@@ -1,25 +1,40 @@
 /*=================== created 09-02-2026 | SDN: 96957 Gmik ===================*/
 /*============================================================================*/
-
-/**
- * function to change img src uppon hover (aboutUs.php)
+/** 
+ * function to change img uppon hover (logo)
  */
-const img = document.getElementById("aboutImg");
+const logoImg = document.getElementById("logoImage");
 
-// hover
-if (img) {
-    img.addEventListener("mouseenter", () => {
-        img.src = "Img/KCD_1.jpg";
-        img.style.width = "190px";
-        img.style.height = "auto";
-        img.style.top = "-310px";
+if (logoImg){
+    logoImg.addEventListener("mouseenter", () => {
+        logoImg.src = "Img/GameWorldLogo.gif";
     });
 
-    img.addEventListener("mouseleave", () => {
-        img.src = "Img/KCD2_1.jpeg";
-        img.style.width = "190px";
-        img.style.height = "auto";
-        img.style.top = "-270px";
+        logoImg.addEventListener("mouseleave", () => {
+        logoImg.src = "Img/GameWorldLogoHover.png";
+    });
+}
+
+
+/**
+ * function to change img uppon hover (aboutUs.php)
+ */
+const aboutImg = document.getElementById("aboutImg");
+
+// hover
+if (aboutImg) {
+    aboutImg.addEventListener("mouseenter", () => {
+        aboutImg.src = "Img/KCD_1.jpg";
+        aboutImg.style.width = "190px";
+        aboutImg.style.height = "auto";
+        aboutImg.style.top = "-310px";
+    });
+
+    aboutImg.addEventListener("mouseleave", () => {
+        aboutImg.src = "Img/KCD2_1.jpeg";
+        aboutImg.style.width = "190px";
+        aboutImg.style.height = "auto";
+        aboutImg.style.top = "-270px";
     });
 }
 

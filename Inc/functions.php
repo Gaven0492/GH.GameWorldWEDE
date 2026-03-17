@@ -42,7 +42,7 @@ $navigation = GetNavigation();
         <div class="headerContainer">
             <div class="headerLogo">
                 <a href="index.php" class="gameWorldLogo">
-                    <img src="Img/GameWorldLogo.gif" alt="GameWorld Logo" class="logoImage">
+                    <img src="Img/GameWorldLogoHover.png" alt="GameWorld Logo" class="logoImage" id="logoImage">
                 </a>
             </div>
             <nav class="socialMenu">

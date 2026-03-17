@@ -82,14 +82,9 @@ body {
     transition: opacity 0.3s ease;
 }
 
-.headerLogo a:hover {
-    opacity: 0.6;
-}
-
 .logoImage {
     height: auto;
-    width: 10rem;
-    margin-left: 2rem;
+    width: 11rem;
     background-color: var(--colorPrimary);
 }
 

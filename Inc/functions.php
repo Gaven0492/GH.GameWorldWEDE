@@ -753,4 +753,89 @@ function ConvertToEmbedURL($url)
     return $url;
 }
 
+
+/**
+ * function to add a new blog to the database
+* @param string $title
+ * @param string $author
+ * @param int $categoryId
+ * @param string $content
+ * @return void
+ */
+function AddBlogPost($title, $author, $categoryId, $content)
+{
+    $db = DbConnect();
+    $statement = $db->prepare("INSERT INTO blog_post (postTitle, postAuthor, categoryId, postContent) VALUES (?, ?, ?, ?)");
+    $statement->bind_param("ssis", $title, $author, $categoryId, $content);
+    $statement->execute();
+    $statement->close();
+    $db->close();
+}
+
+/**
+ * - Function to get all blog posts
+ * @return array $posts
+ */
+function GetBlogPosts()
+{
+    $db = DbConnect();
+    $sql = "SELECT * FROM blog_post ORDER BY createdAt DESC";
+    $result = $db->query($sql);
+    $posts = $result->fetch_all(MYSQLI_ASSOC);
+    $db->close();
+    return $posts;
+}
+
+/**
+ * - Function to add a new comment to a specific post
+ * @param int $postId
+ * @param string $author
+ * @param string $text
+ * @return void
+ */
+function AddBlogComment($postId, $author, $text)
+{
+    $db = DbConnect();
+    $statement = $db->prepare("INSERT INTO blog_comment (postId, commentAuthor, commentText) VALUES (?, ?, ?)");
+    $statement->bind_param("iss", $postId, $author, $text);
+    $statement->execute();
+    $statement->close();
+    $db->close();
+}
+
+/**
+ * - Function to get all comments for a specific post
+ * @param int $postId
+ * @return array $comments
+ */
+function GetCommentsByPostId($postId)
+{
+    $db = DbConnect();
+    $statement = $db->prepare("SELECT * FROM blog_comment WHERE postId = ? ORDER BY createdAt ASC");
+    $statement->bind_param("i", $postId);
+    $statement->execute();
+    $result = $statement->get_result();
+    $comments = $result->fetch_all(MYSQLI_ASSOC);
+    $statement->close();
+    $db->close();
+    return $comments;
+}
+
+/**
+ * - Function to delete a blog post
+ * @param int $postId
+ * @return void
+ */
+function DeleteBlogPost($postId)
+{
+    $db = DbConnect();
+    // Because of the way we set up the table (ON DELETE CASCADE), 
+    // deleting the post will automatically delete its comments too.
+    $statement = $db->prepare("DELETE FROM blog_post WHERE postId = ?");
+    $statement->bind_param("i", $postId);
+    $statement->execute();
+    $statement->close();
+    $db->close();
+}
+
 ?>
